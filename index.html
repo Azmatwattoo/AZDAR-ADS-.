@@ -3,41 +3,25 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>AzDar Ads Watching</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;background:#07111f;color:#f5f8ff;
- font-family:Arial,sans-serif;padding:18px
-}
-header{text-align:center;padding:22px 10px}
+body{margin:0;padding:16px;background:#07111f;color:#f5f8ff;font-family:Arial}
+header{text-align:center;padding:20px 5px}
 h1{color:#00e5ff;margin:0 0 8px}
 header p{color:#aab8cc}
-.stats{
- background:#101d30;border:1px solid #263b57;
- border-radius:15px;padding:18px;margin:10px auto 22px;
- max-width:1000px
-}
+.stats,.card{background:#101d30;border:1px solid #263b57;border-radius:15px;padding:15px}
+.stats{max-width:1000px;margin:10px auto 22px}
+#counter{font-size:23px;font-weight:bold;color:#00e5ff;margin-top:8px}
 .progress-bg{height:12px;background:#26364c;border-radius:20px;overflow:hidden;margin-top:12px}
-.progress{height:100%;width:0;background:linear-gradient(90deg,#a855f7,#00e5ff);transition:.3s}
-#counter{font-size:25px;color:#00e5ff;font-weight:bold}
-.grid{
- max-width:1100px;margin:auto;display:grid;
- grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:17px
-}
-.card{
- background:#101d30;border:1px solid #263b57;
- border-radius:15px;padding:12px;overflow:hidden
-}
-.card h3{margin:5px 0 12px;color:#fff}
-video{
- width:100%;height:165px;object-fit:contain;
- background:#000;border-radius:10px
-}
+.progress{height:100%;width:0;background:linear-gradient(90deg,#a855f7,#00e5ff)}
+.grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.card h3{font-size:16px;margin:0 0 12px}
+video{width:100%;height:165px;background:#000;border-radius:10px;object-fit:contain}
 .status{font-size:13px;color:#aab8cc;margin-top:10px}
-.done{color:#00e5a0!important}
-footer{text-align:center;color:#8393aa;padding:25px 5px;font-size:13px}
+.done{color:#00e5a0}
+footer{text-align:center;color:#8393aa;padding:25px}
 </style>
 </head>
 <body>
@@ -48,169 +32,175 @@ footer{text-align:center;color:#8393aa;padding:25px 5px;font-size:13px}
 </header>
 
 <section class="stats">
-<div>Daily Progress</div>
+<div>DAILY PROGRESS</div>
 <div id="counter">0 / 10 Videos Completed</div>
 <div class="progress-bg"><div class="progress" id="progress"></div></div>
 <p id="message">Complete all 10 videos today.</p>
 </section>
 
-<main class="grid" id="videoGrid"></main>
+<main class="grid">
+
+<section class="card">
+<h3>Video 1 - Big Buck Bunny</h3>
+<video controls playsinline preload="none" src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"></video>
+<div class="status">Watch 10 seconds</div>
+</section>
+
+<section class="card">
+<h3>Video 2 - Elephants Dream</h3>
+<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"></video>
+<div class="status">Watch 10 seconds</div>
+</section>
+
+<section class="card">
+<h3>Video 3 - For Bigger Blazes</h3>
+<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"></video>
+<div class="status">Watch 10 seconds</div>
+</section>
+
+<section class="card">
+<h3>Video 4 - For Bigger Escapes</h3>
+<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"></video>
+<div class="status">Watch 10 seconds</div>
+</section>
+
+<section class="card">
+<h3>Video 5 - For Bigger Fun</h3>
+<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"></video>
+<div class="status">Watch 10 seconds</div>
+</section>
+
+<section class="card">
+<h3>Video 6 - For Bigger Joyrides</h3>
+<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"></video>
+<div class="status">Watch 10 seconds</div>
+</section>
+
+<section class="card">
+<h3>Video 7 - For Bigger Meltdowns</h3>
+<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"></video>
+<div class="status">Watch 10 seconds</div>
+</section>
+
+<section class="card">
+<h3>Video 8 - Sintel</h3>
+<video controls playsinline preload="none" src="https://media.w3.org/2010/05/sintel/trailer.mp4"></video>
+<div class="status">Watch 10 seconds</div>
+</section>
+
+<section class="card">
+<h3>Video 9 - Tears of Steel</h3>
+<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"></video>
+<div class="status">Watch 10 seconds</div>
+</section>
+
+<section class="card">
+<h3>Video 10 - Flower</h3>
+<video controls playsinline preload="none" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
+<div class="status">Watch 10 seconds</div>
+</section>
+
+</main>
 
 <footer>© 2026 AzDar Web Studio</footer>
 
 <script>
-const videos = [
- {
-  title:"Video 1 - Big Buck Bunny",
-  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
- },
- {
-  title:"Video 2 - Elephants Dream",
-  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
- },
- {
-  title:"Video 3 - For Bigger Blazes",
-  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
- },
- {
-  title:"Video 4 - For Bigger Escapes",
-  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
- },
- {
-  title:"Video 5 - For Bigger Fun",
-  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
- },
- {
-  title:"Video 6 - For Bigger Joyrides",
-  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
- },
- {
-  title:"Video 7 - For Bigger Meltdowns",
-  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
- },
- {
-  title:"Video 8 - Sintel",
-  url:"https://media.w3.org/2010/05/sintel/trailer.mp4"
- },
- {
-  title:"Video 9 - Tears of Steel",
-  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
- },
- {
-  title:"Video 10 - Flower",
-  url:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
- }
-];
-
 const today = new Date().toLocaleDateString();
-let saved = JSON.parse(localStorage.getItem("azdarProgress") || "{}");
+let saved;
 
-if(saved.date !== today){
+try{
+ saved = JSON.parse(localStorage.getItem("azdarProgress") || "null");
+}catch(e){saved=null;}
+
+if(!saved || saved.date !== today){
  saved = {date:today,done:[]};
  localStorage.setItem("azdarProgress",JSON.stringify(saved));
 }
 
-const grid = document.getElementById("videoGrid");
+const cards = document.querySelectorAll(".card");
 
-function updateProgress(){
+function update(){
  const total = saved.done.length;
  document.getElementById("counter").textContent =
  total + " / 10 Videos Completed";
  document.getElementById("progress").style.width =
- (total * 10) + "%";
+ (total*10) + "%";
  document.getElementById("message").textContent =
- total === 10 ? "Congratulations! All videos completed." :
- "You have " + (10-total) + " videos remaining.";
+ total===10 ? "All 10 videos completed!" :
+ (10-total)+" videos remaining.";
 }
 
-videos.forEach((item,index)=>{
- const card = document.createElement("section");
- card.className = "card";
-
- const heading = document.createElement("h3");
- heading.textContent = item.title;
-
- const video = document.createElement("video");
- video.src = item.url;
- video.controls = true;
- video.preload = "metadata";
- video.playsInline = true;
-
- const status = document.createElement("div");
- status.className = "status";
-
+cards.forEach((card,index)=>{
+ const video = card.querySelector("video");
+ const status = card.querySelector(".status");
  let watched = 0;
  let lastTime = null;
  let completed = saved.done.includes(index);
 
- function showStatus(){
-  if(completed){
-   status.textContent = "✓ Completed";
-   status.className = "status done";
-   video.pause();
-  } else {
-   status.textContent = "Watch 10 seconds to complete";
-  }
+ function markDone(){
+  if(completed)return;
+  completed=true;
+  saved.done.push(index);
+  localStorage.setItem("azdarProgress",JSON.stringify(saved));
+  status.textContent="✓ Completed";
+  status.className="status done";
+  video.pause();
+  update();
+ }
+
+ if(completed){
+  status.textContent="✓ Completed";
+  status.className="status done";
  }
 
  video.addEventListener("playing",()=>{
-  lastTime = video.currentTime;
+  lastTime=video.currentTime;
  });
 
  video.addEventListener("timeupdate",()=>{
-  if(completed) return;
+  if(completed || video.paused)return;
 
-  const now = video.currentTime;
+  const now=video.currentTime;
 
-  if(lastTime !== null){
-   const difference = now - lastTime;
+  if(lastTime!==null){
+   const gap=now-lastTime;
 
-   if(difference > 0 && difference <= 1.5){
-    watched += difference;
-   } else if(difference > 1.5){
-    watched = 0;
+   if(gap>0 && gap<=1.5){
+    watched+=gap;
+   }else if(gap>1.5){
+    watched=0;
    }
   }
 
-  lastTime = now;
+  lastTime=now;
 
-  if(watched >= 10){
-   completed = true;
-   saved.done.push(index);
-   localStorage.setItem("azdarProgress",JSON.stringify(saved));
-   showStatus();
-   updateProgress();
-  } else {
-   status.textContent =
-    "Watched: " + Math.floor(watched) + " / 10 seconds";
+  if(watched>=10){
+   markDone();
+  }else{
+   status.textContent="Watched "+Math.floor(watched)+" / 10 seconds";
   }
  });
 
  video.addEventListener("seeking",()=>{
-  lastTime = null;
-  watched = 0;
-  if(!completed){
-   status.textContent = "Watch 10 seconds continuously";
-  }
+  watched=0;
+  lastTime=null;
+  if(!completed)status.textContent="Watch 10 seconds again";
  });
 
  video.addEventListener("pause",()=>{
-  lastTime = null;
+  lastTime=null;
+  if(!completed){
+   watched=0;
+   status.textContent="Paused - watch 10 seconds";
+  }
  });
 
  video.addEventListener("error",()=>{
-  status.textContent = "Video could not load. Check internet or try again.";
+  status.textContent="Video unavailable - try another video";
  });
-
- card.appendChild(heading);
- card.appendChild(video);
- card.appendChild(status);
- grid.appendChild(card);
-
- showStatus();
 });
 
-updateProgress();
+update();
 </script>
 </body>
 </html>
