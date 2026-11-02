@@ -3,190 +3,74 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#080b18">
-<title>Ads Watching Dashboard</title>
+<title>AzDar Ads Watching</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-
+*{box-sizing:border-box;margin:0;padding:0}
 body{
-  background:#080b18;
-  color:#f5f7ff;
-  font-family:Arial,sans-serif;
-  min-height:100vh;
+ background:#080b18;color:#f5f7ff;
+ font-family:Arial,sans-serif;min-height:100vh
 }
-
 header{
-  padding:22px 16px;
-  text-align:center;
-  background:linear-gradient(120deg,#10152d,#17102c);
-  border-bottom:1px solid #29264c;
+ text-align:center;padding:23px 12px;
+ background:linear-gradient(120deg,#10152d,#211137);
+ border-bottom:1px solid #39305f
 }
-
-.logo{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:1px;
-  color:#00e5ff;
-}
-
+.logo{font-size:26px;font-weight:900;color:#00e5ff}
 .logo span{color:#a855f7}
-
-header p{
-  margin-top:7px;
-  font-size:12px;
-  color:#aaaec5;
-}
-
-.container{
-  max-width:1050px;
-  margin:auto;
-  padding:20px 15px 50px;
-}
-
+header p{font-size:12px;color:#aaa;margin-top:8px}
+.container{max-width:1050px;margin:auto;padding:20px 15px 45px}
 .stats{
-  background:linear-gradient(135deg,#171e39,#211438);
-  border:1px solid #39305f;
-  padding:22px;
-  border-radius:18px;
-  margin-bottom:22px;
-  box-shadow:0 8px 30px #0005;
+ background:linear-gradient(135deg,#171e39,#211438);
+ border:1px solid #39305f;padding:22px;
+ border-radius:18px;margin-bottom:22px
 }
-
-.stats-title{
-  color:#c5c8df;
-  font-size:14px;
-  margin-bottom:12px;
-}
-
-.counter{
-  font-size:38px;
-  font-weight:900;
-  color:#00e5ff;
-}
-
-.counter small{
-  font-size:17px;
-  color:#a5a7bc;
-}
-
+.stats-title{font-size:13px;color:#c5c8df;margin-bottom:12px}
+.counter{font-size:38px;font-weight:900;color:#00e5ff}
+.counter small{font-size:16px;color:#aaa}
 .progress-bg{
-  width:100%;
-  height:11px;
-  background:#080b18;
-  border-radius:20px;
-  margin:17px 0 10px;
-  overflow:hidden;
+ height:11px;background:#080b18;border-radius:20px;
+ margin:16px 0 10px;overflow:hidden
 }
-
 .progress{
-  width:0%;
-  height:100%;
-  background:linear-gradient(90deg,#00e5ff,#a855f7);
-  border-radius:20px;
-  transition:.4s;
+ height:100%;width:0%;
+ background:linear-gradient(90deg,#00e5ff,#a855f7);
+ transition:.4s
 }
-
-.status{
-  color:#b8bad0;
-  font-size:12px;
-}
-
-.section-title{
-  font-size:21px;
-  margin:27px 0 15px;
-}
-
-.ads-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:15px;
-}
-
+.status{font-size:12px;color:#c1c6dc}
+.section-title{font-size:21px;margin:27px 0 15px}
+.daily{font-size:12px;color:#aab0c7;margin-top:7px}
+.ads-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
 .ad-card{
-  background:#11182b;
-  border:1px solid #293450;
-  border-radius:15px;
-  overflow:hidden;
-  transition:.25s;
+ background:#11182b;border:1px solid #293450;
+ border-radius:15px;overflow:hidden
 }
-
-.ad-card:hover{
-  border-color:#00e5ff;
-  transform:translateY(-3px);
-}
-
-.video-wrap{
-  position:relative;
-  background:#050811;
-  aspect-ratio:16/9;
-}
-
-video{
-  display:block;
-  width:100%;
-  height:100%;
-  object-fit:contain;
-}
-
+.ad-card.completed{border-color:#16a36a}
+.video-wrap{aspect-ratio:16/9;background:#030611}
+video{width:100%;height:100%;display:block;object-fit:contain}
 .ad-info{padding:14px}
-
-.ad-info h3{
-  font-size:15px;
-  margin-bottom:7px;
-}
-
-.ad-info p{
-  color:#969db7;
-  font-size:12px;
-  margin-bottom:12px;
-}
-
+.ad-info h3{font-size:15px;margin-bottom:8px}
+.ad-info p{font-size:12px;color:#969db7;line-height:1.6}
 .ad-btn{
-  width:100%;
-  padding:11px;
-  border:0;
-  border-radius:8px;
-  background:linear-gradient(90deg,#00bcd4,#7c3aed);
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
+ margin-top:12px;width:100%;padding:11px;
+ border:0;border-radius:8px;
+ background:linear-gradient(90deg,#00bcd4,#7c3aed);
+ color:white;font-weight:bold
 }
-
-.ad-btn:disabled{
-  background:#164a3d;
-  color:#80f5c0;
-  cursor:default;
+.ad-card.completed .ad-btn{
+ background:#164a3d;color:#80f5c0
 }
-
-.completed{
-  border-color:#16a36a;
-}
-
-.completed .ad-info h3{color:#54e6a2}
-
 .notice{
-  background:#11182b;
-  border:1px solid #293450;
-  padding:17px;
-  margin-top:25px;
-  border-radius:13px;
-  color:#aeb5cf;
-  font-size:12px;
-  line-height:1.8;
+ background:#11182b;border:1px solid #293450;
+ padding:17px;margin-top:25px;border-radius:13px;
+ color:#aeb5cf;font-size:12px;line-height:1.9
 }
-
-footer{
-  text-align:center;
-  padding:25px;
-  color:#747c96;
-  font-size:12px;
-}
-
+footer{text-align:center;padding:25px;color:#747c96;font-size:12px}
 @media(max-width:600px){
-  .ads-grid{grid-template-columns:1fr}
-  .counter{font-size:33px}
+ .ads-grid{grid-template-columns:1fr}
+ .counter{font-size:33px}
 }
 </style>
 </head>
@@ -194,264 +78,319 @@ footer{
 <body>
 
 <header>
-  <div class="logo">ADS <span>WATCHING</span></div>
-  <p>Watch Videos • Complete Ads • Daily Progress</p>
+ <div class="logo">AZDAR <span>ADS WATCHING</span></div>
+ <p>Daily Video Playlist • Watch • Complete • Progress</p>
 </header>
 
 <div class="container">
 
-  <div class="stats">
-    <div class="stats-title">YOUR DAILY WATCHING PROGRESS</div>
-
-    <div class="counter">
-      <span id="watched">0</span>
-      <small>/ 10 Ads Watched</small>
-    </div>
-
-    <div class="progress-bg">
-      <div class="progress" id="progress"></div>
-    </div>
-
-    <div class="status" id="status">
-      You have 10 ads remaining today.
-    </div>
+ <div class="stats">
+  <div class="stats-title">YOUR DAILY WATCHING PROGRESS</div>
+  <div class="counter">
+   <span id="watched">0</span>
+   <small>/ 10 Ads Watched</small>
   </div>
-
-  <h2 class="section-title">Available Video Ads</h2>
-
-  <div class="ads-grid" id="adsGrid"></div>
-
-  <div class="notice">
-    <b>Important Instructions</b><br>
-    • Har video complete dekhna zaroori hai.<br>
-    • Video skip karne par ad count nahi hoga.<br>
-    • Har ad sirf aik baar count hoga.<br>
-    • Daily progress 24 hours baad reset hogi.<br>
-    • Progress isi browser/device mein save hoti hai.
+  <div class="progress-bg">
+   <div class="progress" id="progress"></div>
   </div>
+  <div class="status" id="status">Loading...</div>
+  <div class="daily" id="daily"></div>
+ </div>
+
+ <h2 class="section-title">Today's Video Ads</h2>
+ <div class="ads-grid" id="adsGrid"></div>
+
+ <div class="notice">
+  <b>Instructions</b><br>
+  • Daily 10 videos show hongi.<br>
+  • Har video ka 15-second segment complete dekhein.<br>
+  • Video skip karne par count nahi hoga.<br>
+  • Har ad sirf aik baar count hogi.<br>
+  • Progress 24 hours baad reset hogi.<br>
+  • Videos aur progress isi browser mein manage hoti hain.
+ </div>
 
 </div>
 
 <footer>
-  ADS WATCHING DASHBOARD<br>
-  Powered by AzDar
+ AZDAR ADS WATCHING<br>
+ Powered by AzDar Web Studio
 </footer>
 
 <script>
 
-const videos = [
-  {
-    title:"Advertisement 01",
-    url:"https://samplelib.com/lib/preview/mp4/sample-10s.mp4"
-  },
-  {
-    title:"Advertisement 02",
-    url:"https://samplelib.com/lib/preview/mp4/sample-15s.mp4"
-  },
-  {
-    title:"Advertisement 03",
-    url:"https://samplelib.com/lib/preview/mp4/sample-20s.mp4"
-  },
-  {
-    title:"Advertisement 04",
-    url:"https://samplelib.com/lib/preview/mp4/sample-10s.mp4"
-  },
-  {
-    title:"Advertisement 05",
-    url:"https://samplelib.com/lib/preview/mp4/sample-15s.mp4"
-  },
-  {
-    title:"Advertisement 06",
-    url:"https://samplelib.com/lib/preview/mp4/sample-20s.mp4"
-  },
-  {
-    title:"Advertisement 07",
-    url:"https://samplelib.com/lib/preview/mp4/sample-10s.mp4"
-  },
-  {
-    title:"Advertisement 08",
-    url:"https://samplelib.com/lib/preview/mp4/sample-15s.mp4"
-  },
-  {
-    title:"Advertisement 09",
-    url:"https://samplelib.com/lib/preview/mp4/sample-20s.mp4"
-  },
-  {
-    title:"Advertisement 10",
-    url:"https://samplelib.com/lib/preview/mp4/sample-10s.mp4"
-  }
+// 12 DIFFERENT PUBLIC TEST VIDEOS
+// Daily 10 videos are selected from this pool.
+
+const videoPool = [
+ {
+  title:"Big Buck Bunny",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+ },
+ {
+  title:"Elephants Dream",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+ },
+ {
+  title:"For Bigger Blazes",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+ },
+ {
+  title:"For Bigger Escapes",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+ },
+ {
+  title:"For Bigger Fun",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+ },
+ {
+  title:"For Bigger Joyrides",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+ },
+ {
+  title:"For Bigger Meltdowns",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+ },
+ {
+  title:"Sintel",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4"
+ },
+ {
+  title:"Subaru Outback",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/SubaruOutbackOnStreetAndDirt.mp4"
+ },
+ {
+  title:"Tears of Steel",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+ },
+ {
+  title:"We Are Going On Bullrun",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4"
+ },
+ {
+  title:"What Car Can You Get",
+  url:"https://storage.googleapis.com/gtv-videos-bucket/sample/WhatCarCanYouGetForAGrand.mp4"
+ }
 ];
 
-const STORAGE_KEY="azdar_ads_data_v1";
+const STORAGE_KEY="azdar_daily_ads_v2";
+const WATCH_SECONDS=15;
+const RESET_TIME=24*60*60*1000;
 
-function getData(){
-  let data;
-
-  try{
-    data=JSON.parse(localStorage.getItem(STORAGE_KEY));
-  }catch(e){data=null;}
-
-  const now=Date.now();
-
-  if(!data || !data.start || now-data.start>=86400000){
-    data={
-      start:now,
-      completed:[]
-    };
-    saveData(data);
-  }
-
-  return data;
+function dateKey(){
+ const d=new Date();
+ return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
 }
 
-function saveData(data){
-  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+// Deterministic daily random generator
+function seededRandom(seed){
+ let t=seed>>>0;
+ return function(){
+  t+=0x6D2B79F5;
+  let x=t;
+  x=Math.imul(x^(x>>>15),x|1);
+  x^=x+Math.imul(x^(x>>>7),x|61);
+  return ((x^(x>>>14))>>>0)/4294967296;
+ };
+}
+
+function dailyPlaylist(){
+ const seed=dateKey().split("-").join("");
+ const random=seededRandom(Number(seed));
+
+ const shuffled=[...videoPool];
+
+ for(let i=shuffled.length-1;i>0;i--){
+  const j=Math.floor(random()*(i+1));
+  [shuffled[i],shuffled[j]]=[shuffled[j],shuffled[i]];
+ }
+
+ return shuffled.slice(0,10);
+}
+
+function getData(){
+ try{
+  const saved=JSON.parse(localStorage.getItem(STORAGE_KEY));
+
+  if(saved && saved.start &&
+     Date.now()-saved.start<RESET_TIME &&
+     saved.day===dateKey()){
+    return saved;
+  }
+ }catch(e){}
+
+ return newDay();
+}
+
+function newDay(){
+ const data={
+  start:Date.now(),
+  day:dateKey(),
+  completed:[]
+ };
+ localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+ return data;
 }
 
 let data=getData();
+let playlist=dailyPlaylist();
+
+function saveData(){
+ localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+}
 
 function updateDashboard(){
+ const count=data.completed.length;
 
-  const count=data.completed.length;
+ document.getElementById("watched").textContent=count;
+ document.getElementById("progress").style.width=(count*10)+"%";
 
-  document.getElementById("watched").textContent=count;
+ document.getElementById("status").textContent=
+  count===10
+  ?"Congratulations! All 10 videos completed!"
+  :(10-count)+" videos remaining today.";
 
-  document.getElementById("progress").style.width=
-    (count/10*100)+"%";
+ document.getElementById("daily").textContent=
+  "Daily playlist: "+dateKey();
 
-  document.getElementById("status").textContent=
-    count===10
-    ?"Congratulations! All 10 ads completed!"
-    :"You have "+(10-count)+" ads remaining today.";
+ playlist.forEach((item,index)=>{
+  if(data.completed.includes(index)){
+   const card=document.getElementById("card-"+index);
+   const btn=document.getElementById("btn-"+index);
+   const video=document.getElementById("video-"+index);
 
-  videos.forEach((video,index)=>{
+   if(card)card.classList.add("completed");
+   if(btn){
+    btn.textContent="✓ Completed";
+    btn.disabled=true;
+   }
+   if(video)video.pause();
+  }
+ });
+}
 
-    const card=document.getElementById("card-"+index);
-    const btn=document.getElementById("btn-"+index);
+function completeAd(index,video){
+ if(data.completed.includes(index))return;
 
-    if(data.completed.includes(index)){
-      card.classList.add("completed");
-      btn.textContent="✓ Completed";
-      btn.disabled=true;
-    }
+ data.completed.push(index);
+ saveData();
+ video.pause();
 
-  });
+ const btn=document.getElementById("btn-"+index);
+ btn.textContent="✓ Completed";
+ btn.disabled=true;
+
+ document.getElementById("card-"+index).classList.add("completed");
+
+ updateDashboard();
 }
 
 function createAds(){
+ const grid=document.getElementById("adsGrid");
 
-  const grid=document.getElementById("adsGrid");
+ playlist.forEach((item,index)=>{
+  const card=document.createElement("div");
+  card.className="ad-card";
+  card.id="card-"+index;
 
-  videos.forEach((item,index)=>{
+  card.innerHTML=`
+   <div class="video-wrap">
+    <video
+     id="video-${index}"
+     controls
+     playsinline
+     preload="metadata"
+     controlsList="nodownload noplaybackrate"
+    >
+     <source src="${item.url}" type="video/mp4">
+     Your browser does not support video.
+    </video>
+   </div>
+   <div class="ad-info">
+    <h3>Ad ${String(index+1).padStart(2,"0")}: ${item.title}</h3>
+    <p>Watch the complete 15-second segment to complete this ad.</p>
+    <button class="ad-btn" id="btn-${index}">
+     Start Watching
+    </button>
+   </div>
+  `;
 
-    const card=document.createElement("div");
+  grid.appendChild(card);
 
-    card.className="ad-card";
-    card.id="card-"+index;
+  const video=document.getElementById("video-"+index);
+  const btn=document.getElementById("btn-"+index);
 
-    card.innerHTML=`
-      <div class="video-wrap">
-        <video
-          id="video-${index}"
-          controls
-          playsinline
-          preload="metadata"
-          controlsList="nodownload noplaybackrate"
-        >
-          <source src="${item.url}" type="video/mp4">
-        </video>
-      </div>
+  let maxWatched=0;
+  let completing=false;
 
-      <div class="ad-info">
-        <h3>${item.title}</h3>
-        <p>Watch the complete video to finish this ad.</p>
-        <button class="ad-btn" id="btn-${index}">
-          Watch Video
-        </button>
-      </div>
-    `;
+  video.addEventListener("timeupdate",()=>{
+   if(video.paused || video.seeking || completing)return;
 
-    grid.appendChild(card);
+   if(video.currentTime<=maxWatched+1.2){
+    maxWatched=Math.max(maxWatched,video.currentTime);
+   }
 
-    const video=document.getElementById("video-"+index);
-    const btn=document.getElementById("btn-"+index);
-
-    let maxWatched=0;
-    let wasPlaying=false;
-
-    video.addEventListener("timeupdate",()=>{
-
-      if(!video.paused && !video.seeking){
-        maxWatched=Math.max(maxWatched,video.currentTime);
-      }
-
-    });
-
-    video.addEventListener("seeking",()=>{
-
-      if(video.currentTime>maxWatched+0.5){
-        video.currentTime=maxWatched;
-      }
-
-    });
-
-    video.addEventListener("play",()=>{
-
-      if(data.completed.includes(index)){
-        video.pause();
-      }
-
-    });
-
-    video.addEventListener("ended",()=>{
-
-      if(data.completed.includes(index))return;
-
-      if(video.duration &&
-         maxWatched>=video.duration-0.5){
-
-        data.completed.push(index);
-        saveData(data);
-        updateDashboard();
-
-      }
-
-    });
-
-    video.addEventListener("error",()=>{
-      btn.textContent="Video unavailable - Retry";
-    });
-
-    btn.addEventListener("click",()=>{
-
-      if(data.completed.includes(index))return;
-
-      if(video.readyState===0){
-        video.load();
-      }
-
-      if(video.paused){
-        video.play().then(()=>{
-          btn.textContent="Video Playing...";
-        }).catch(()=>{
-          btn.textContent="Tap to Play";
-        });
-      }else{
-        video.pause();
-        btn.textContent="Resume Video";
-      }
-
-    });
-
+   if(video.currentTime>=WATCH_SECONDS &&
+      maxWatched>=WATCH_SECONDS-0.3){
+    completing=true;
+    completeAd(index,video);
+   }
   });
 
-  updateDashboard();
+  video.addEventListener("seeking",()=>{
+   if(video.currentTime>maxWatched+0.5){
+    video.currentTime=maxWatched;
+   }
+  });
 
+  video.addEventListener("play",()=>{
+   if(data.completed.includes(index)){
+    video.pause();
+   }else{
+    btn.textContent="Watching...";
+   }
+  });
+
+  video.addEventListener("pause",()=>{
+   if(!data.completed.includes(index)){
+    btn.textContent="Resume Video";
+   }
+  });
+
+  video.addEventListener("error",()=>{
+   btn.textContent="Video unavailable";
+  });
+
+  btn.addEventListener("click",()=>{
+   if(data.completed.includes(index))return;
+
+   if(video.paused){
+    video.play().catch(()=>{
+     btn.textContent="Tap Video to Play";
+    });
+   }else{
+    video.pause();
+   }
+  });
+ });
+
+ updateDashboard();
+}
+
+// Automatic 24-hour reset
+function scheduleReset(){
+ const remaining=RESET_TIME-(Date.now()-data.start);
+
+ setTimeout(()=>{
+  data=newDay();
+  playlist=dailyPlaylist();
+  location.reload();
+ },Math.max(1000,remaining));
 }
 
 createAds();
+scheduleReset();
 
 </script>
 </body>
-  </html>
-  
+</html>
