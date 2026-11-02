@@ -25,7 +25,6 @@ footer{text-align:center;color:#8393aa;padding:25px}
 </style>
 </head>
 <body>
-
 <header>
 <h1>⚡ AZDAR ADS WATCHING</h1>
 <p>Watch Videos • Complete Daily Tasks</p>
@@ -43,16 +42,16 @@ footer{text-align:center;color:#8393aa;padding:25px}
 
 <script>
 const videos=[
-["Video 1 - Big Buck Bunny","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"],
-["Video 2 - Sintel","https://media.w3.org/2010/05/sintel/trailer.mp4"],
+["Video 1 - Big Buck Bunny","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
+["Video 2 - Sintel Trailer","https://media.w3.org/2010/05/sintel/trailer.mp4"],
 ["Video 3 - Flower","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
-["Video 4 - Big Buck Bunny Sample","https://www.w3schools.com/html/mov_bbb.mp4"],
-["Video 5 - Sample 10 Seconds","https://samplelib.com/lib/preview/mp4/sample-10s.mp4"],
-["Video 6 - Sample 15 Seconds","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
-["Video 7 - Sample 20 Seconds","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
-["Video 8 - Sintel Trailer","https://media.w3.org/2010/05/sintel/trailer.mp4"],
-["Video 9 - Sample Video","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
-["Video 10 - Sample Movie","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"]
+["Video 4 - Sample 15 Seconds","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
+["Video 5 - Sample 20 Seconds","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
+["Video 6 - Sample 30 Seconds","https://samplelib.com/lib/preview/mp4/sample-30s.mp4"],
+["Video 7 - Big Buck Bunny 30s","https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-480p-30s/master/video.mp4"],
+["Video 8 - Tears of Steel","https://archive.org/download/tearsofsteel_201403/tearsofsteel_4k.mov"],
+["Video 9 - Sample Video","https://www.samplefiles.online/files/sample.mp4"],
+["Video 10 - Learning Container","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"]
 ];
 
 const today=new Date().toLocaleDateString();
@@ -145,7 +144,7 @@ videos.forEach((item,index)=>{
  });
 
  video.addEventListener("error",()=>{
-  status.textContent="Video unavailable. Try another video.";
+  status.textContent="Video unavailable - try another video";
  });
 
  card.appendChild(heading);
