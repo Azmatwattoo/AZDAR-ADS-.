@@ -9,7 +9,7 @@
 *{box-sizing:border-box}
 body{margin:0;padding:16px;background:#07111f;color:#f5f8ff;font-family:Arial}
 header{text-align:center;padding:20px 5px}
-h1{color:#00e5ff;margin:0 0 8px}
+h1{color:#00e5ff}
 header p{color:#aab8cc}
 .stats,.card{background:#101d30;border:1px solid #263b57;border-radius:15px;padding:15px}
 .stats{max-width:1000px;margin:10px auto 22px}
@@ -17,14 +17,15 @@ header p{color:#aab8cc}
 .progress-bg{height:12px;background:#26364c;border-radius:20px;overflow:hidden;margin-top:12px}
 .progress{height:100%;width:0;background:linear-gradient(90deg,#a855f7,#00e5ff)}
 .grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.card h3{font-size:16px;margin:0 0 12px}
-video{width:100%;height:165px;background:#000;border-radius:10px;object-fit:contain}
+.card h3{font-size:16px}
+video{width:100%;height:165px;background:#000;border-radius:10px}
 .status{font-size:13px;color:#aab8cc;margin-top:10px}
 .done{color:#00e5a0}
 footer{text-align:center;color:#8393aa;padding:25px}
 </style>
 </head>
 <body>
+
 <header>
 <h1>⚡ AZDAR ADS WATCHING</h1>
 <p>Watch Videos • Complete Daily Tasks</p>
@@ -42,21 +43,22 @@ footer{text-align:center;color:#8393aa;padding:25px}
 
 <script>
 const videos=[
-["Video 1 - Big Buck Bunny","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
-["Video 2 - Sintel Trailer","https://media.w3.org/2010/05/sintel/trailer.mp4"],
-["Video 3 - Flower","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
-["Video 4 - Sample 15 Seconds","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
-["Video 5 - Sample 20 Seconds","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
-["Video 6 - Sample 30 Seconds","https://samplelib.com/lib/preview/mp4/sample-30s.mp4"],
-["Video 7 - Big Buck Bunny 30s","https://raw.githubusercontent.com/bower-media-samples/big-buck-bunny-480p-30s/master/video.mp4"],
-["Video 8 - Tears of Steel","https://archive.org/download/tearsofsteel_201403/tearsofsteel_4k.mov"],
-["Video 9 - Sample Video","https://www.samplefiles.online/files/sample.mp4"],
-["Video 10 - Learning Container","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"]
+["Video 1 - Sample 15s","https://cdn.truefilesize.com/mp4/sample-60fps.mp4"],
+["Video 2 - Sample Silent 15s","https://cdn.truefilesize.com/mp4/sample-silent.mp4"],
+["Video 3 - Sample 15s","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
+["Video 4 - Sample 20s","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
+["Video 5 - Sample 30s","https://samplelib.com/lib/preview/mp4/sample-30s.mp4"],
+["Video 6 - Flower 30s","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
+["Video 7 - Sintel Trailer","https://media.w3.org/2010/05/sintel/trailer.mp4"],
+["Video 8 - Sample 30s","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
+["Video 9 - Sample MP4","https://www.samplefiles.online/files/sample.mp4"],
+["Video 10 - Sample Video","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"]
 ];
 
 const today=new Date().toLocaleDateString();
 let saved;
 try{saved=JSON.parse(localStorage.getItem("azdarProgress")||"null")}catch(e){saved=null}
+
 if(!saved||saved.date!==today){
  saved={date:today,done:[]};
  localStorage.setItem("azdarProgress",JSON.stringify(saved));
@@ -66,7 +68,7 @@ if(!Array.isArray(saved.done))saved.done=[];
 const grid=document.getElementById("videoGrid");
 
 function update(){
- const total=saved.done.length;
+ let total=saved.done.length;
  document.getElementById("counter").textContent=total+" / 10 Videos Completed";
  document.getElementById("progress").style.width=(total*10)+"%";
  document.getElementById("message").textContent=
@@ -83,7 +85,7 @@ videos.forEach((item,index)=>{
  const video=document.createElement("video");
  video.src=item[1];
  video.controls=true;
- video.preload="none";
+ video.preload="metadata";
  video.playsInline=true;
 
  const status=document.createElement("div");
@@ -116,10 +118,10 @@ videos.forEach((item,index)=>{
 
  video.addEventListener("timeupdate",()=>{
   if(completed||video.paused)return;
-  const now=video.currentTime;
+  let now=video.currentTime;
 
   if(lastTime!==null){
-   const gap=now-lastTime;
+   let gap=now-lastTime;
    if(gap>0&&gap<=1.5)watched+=gap;
    else if(gap>1.5)watched=0;
   }
