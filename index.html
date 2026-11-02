@@ -9,7 +9,7 @@
 *{box-sizing:border-box}
 body{margin:0;padding:16px;background:#07111f;color:#f5f8ff;font-family:Arial}
 header{text-align:center;padding:20px 5px}
-h1{color:#00e5ff}
+h1{color:#00e5ff;margin:0 0 8px}
 header p{color:#aab8cc}
 .stats,.card{background:#101d30;border:1px solid #263b57;border-radius:15px;padding:15px}
 .stats{max-width:1000px;margin:10px auto 22px}
@@ -28,14 +28,14 @@ footer{text-align:center;color:#8393aa;padding:25px}
 
 <header>
 <h1>⚡ AZDAR ADS WATCHING</h1>
-<p>Watch Videos • Complete Daily Tasks</p>
+<p>30 Videos Library • Daily Target 10</p>
 </header>
 
 <section class="stats">
 <div>DAILY PROGRESS</div>
 <div id="counter">0 / 10 Videos Completed</div>
 <div class="progress-bg"><div class="progress" id="progress"></div></div>
-<p id="message">Complete all 10 videos today.</p>
+<p id="message">Complete any 10 videos today.</p>
 </section>
 
 <main class="grid" id="videoGrid"></main>
@@ -43,49 +43,68 @@ footer{text-align:center;color:#8393aa;padding:25px}
 
 <script>
 const videos=[
-["Video 1 - Sample 15s","https://cdn.truefilesize.com/mp4/sample-60fps.mp4"],
-["Video 2 - Sample Silent 15s","https://cdn.truefilesize.com/mp4/sample-silent.mp4"],
-["Video 3 - Sample 15s","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
-["Video 4 - Sample 20s","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
-["Video 5 - Sample 30s","https://samplelib.com/lib/preview/mp4/sample-30s.mp4"],
-["Video 6 - Flower 30s","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
-["Video 7 - Sintel Trailer","https://media.w3.org/2010/05/sintel/trailer.mp4"],
-["Video 8 - Sample 30s","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
-["Video 9 - Sample MP4","https://www.samplefiles.online/files/sample.mp4"],
-["Video 10 - Sample Video","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"]
+["Video 1","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"],
+["Video 2","https://media.w3.org/2010/05/sintel/trailer.mp4"],
+["Video 3","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
+["Video 4","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
+["Video 5","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
+["Video 6","https://samplelib.com/lib/preview/mp4/sample-30s.mp4"],
+["Video 7","https://www.w3schools.com/html/mov_bbb.mp4"],
+["Video 8","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"],
+["Video 9","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
+["Video 10","https://www.samplefiles.online/files/sample.mp4"],
+["Video 11","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"],
+["Video 12","https://media.w3.org/2010/05/sintel/trailer.mp4"],
+["Video 13","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
+["Video 14","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
+["Video 15","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
+["Video 16","https://samplelib.com/lib/preview/mp4/sample-30s.mp4"],
+["Video 17","https://www.w3schools.com/html/mov_bbb.mp4"],
+["Video 18","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"],
+["Video 19","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
+["Video 20","https://www.samplefiles.online/files/sample.mp4"],
+["Video 21","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"],
+["Video 22","https://media.w3.org/2010/05/sintel/trailer.mp4"],
+["Video 23","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
+["Video 24","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
+["Video 25","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
+["Video 26","https://samplelib.com/lib/preview/mp4/sample-30s.mp4"],
+["Video 27","https://www.w3schools.com/html/mov_bbb.mp4"],
+["Video 28","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"],
+["Video 29","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
+["Video 30","https://www.samplefiles.online/files/sample.mp4"]
 ];
 
 const today=new Date().toLocaleDateString();
 let saved;
-try{saved=JSON.parse(localStorage.getItem("azdarProgress")||"null")}catch(e){saved=null}
+try{saved=JSON.parse(localStorage.getItem("azdarDaily30")||"null")}catch(e){saved=null}
 
 if(!saved||saved.date!==today){
  saved={date:today,done:[]};
- localStorage.setItem("azdarProgress",JSON.stringify(saved));
+ localStorage.setItem("azdarDaily30",JSON.stringify(saved));
 }
 if(!Array.isArray(saved.done))saved.done=[];
 
 const grid=document.getElementById("videoGrid");
 
 function update(){
- let total=saved.done.length;
+ const total=Math.min(saved.done.length,10);
  document.getElementById("counter").textContent=total+" / 10 Videos Completed";
  document.getElementById("progress").style.width=(total*10)+"%";
  document.getElementById("message").textContent=
- total===10?"All 10 videos completed!":(10-total)+" videos remaining.";
+ total>=10?"Daily Target Completed! Come back tomorrow.":(10-total)+" videos remaining today.";
 }
 
 videos.forEach((item,index)=>{
  const card=document.createElement("section");
  card.className="card";
-
  const heading=document.createElement("h3");
  heading.textContent=item[0];
 
  const video=document.createElement("video");
  video.src=item[1];
  video.controls=true;
- video.preload="metadata";
+ video.preload="none";
  video.playsInline=true;
 
  const status=document.createElement("div");
@@ -98,7 +117,7 @@ videos.forEach((item,index)=>{
   if(completed)return;
   completed=true;
   saved.done.push(index);
-  localStorage.setItem("azdarProgress",JSON.stringify(saved));
+  localStorage.setItem("azdarDaily30",JSON.stringify(saved));
   status.textContent="✓ Completed";
   status.className="status done";
   video.pause();
@@ -108,6 +127,8 @@ videos.forEach((item,index)=>{
  if(completed){
   status.textContent="✓ Completed";
   status.className="status done";
+ }else if(saved.done.length>=10){
+  status.textContent="Daily limit reached";
  }else{
   status.textContent="Watch 10 seconds continuously";
  }
@@ -117,11 +138,11 @@ videos.forEach((item,index)=>{
  });
 
  video.addEventListener("timeupdate",()=>{
-  if(completed||video.paused)return;
-  let now=video.currentTime;
+  if(completed||saved.done.length>=10||video.paused)return;
+  const now=video.currentTime;
 
   if(lastTime!==null){
-   let gap=now-lastTime;
+   const gap=now-lastTime;
    if(gap>0&&gap<=1.5)watched+=gap;
    else if(gap>1.5)watched=0;
   }
