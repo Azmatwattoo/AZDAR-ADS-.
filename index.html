@@ -3,214 +3,214 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#080b18">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AzDar Ads Watching</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#080b18;color:#fff;font-family:Arial}
-header{text-align:center;padding:24px;background:linear-gradient(120deg,#10152d,#211137);border-bottom:1px solid #39305f}
-.logo{font-size:25px;font-weight:900;color:#00e5ff}
-.logo span{color:#a855f7}
-header p{font-size:12px;color:#aaa;margin-top:8px}
-.container{max-width:1050px;margin:auto;padding:20px 15px}
-.stats{background:linear-gradient(135deg,#171e39,#211438);border:1px solid #39305f;padding:22px;border-radius:18px;margin-bottom:22px}
-.stats-title{font-size:13px;color:#c5c8df;margin-bottom:12px}
-.counter{font-size:38px;font-weight:900;color:#00e5ff}
-.counter small{font-size:16px;color:#aaa}
-.progress-bg{height:11px;background:#080b18;border-radius:20px;margin:16px 0;overflow:hidden}
-.progress{height:100%;width:0;background:linear-gradient(90deg,#00e5ff,#a855f7);transition:.4s}
-.status{font-size:12px;color:#c1c6dc}
-.section-title{margin:25px 0 15px}
-.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}
-.card{background:#11182b;border:1px solid #293450;border-radius:15px;overflow:hidden}
-.card.done{border-color:#16a36a}
-video{display:block;width:100%;aspect-ratio:16/9;background:#030611;object-fit:contain}
-.info{padding:14px}
-.info h3{font-size:15px;margin-bottom:8px}
-.info p{font-size:12px;color:#aaa;line-height:1.5}
-button{width:100%;padding:12px;margin-top:12px;border:0;border-radius:8px;background:linear-gradient(90deg,#00bcd4,#7c3aed);color:white;font-weight:bold}
-button:disabled{background:#164a3d;color:#80f5c0}
-.notice{background:#11182b;border:1px solid #293450;padding:17px;margin-top:25px;border-radius:13px;color:#aeb5cf;font-size:12px;line-height:1.9}
-footer{text-align:center;padding:25px;color:#747c96;font-size:12px}
-@media(max-width:600px){.grid{grid-template-columns:1fr}.counter{font-size:33px}}
+*{box-sizing:border-box}
+body{
+ margin:0;background:#07111f;color:#f5f8ff;
+ font-family:Arial,sans-serif;padding:18px
+}
+header{text-align:center;padding:22px 10px}
+h1{color:#00e5ff;margin:0 0 8px}
+header p{color:#aab8cc}
+.stats{
+ background:#101d30;border:1px solid #263b57;
+ border-radius:15px;padding:18px;margin:10px auto 22px;
+ max-width:1000px
+}
+.progress-bg{height:12px;background:#26364c;border-radius:20px;overflow:hidden;margin-top:12px}
+.progress{height:100%;width:0;background:linear-gradient(90deg,#a855f7,#00e5ff);transition:.3s}
+#counter{font-size:25px;color:#00e5ff;font-weight:bold}
+.grid{
+ max-width:1100px;margin:auto;display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:17px
+}
+.card{
+ background:#101d30;border:1px solid #263b57;
+ border-radius:15px;padding:12px;overflow:hidden
+}
+.card h3{margin:5px 0 12px;color:#fff}
+video{
+ width:100%;height:165px;object-fit:contain;
+ background:#000;border-radius:10px
+}
+.status{font-size:13px;color:#aab8cc;margin-top:10px}
+.done{color:#00e5a0!important}
+footer{text-align:center;color:#8393aa;padding:25px 5px;font-size:13px}
 </style>
 </head>
 <body>
+
 <header>
- <div class="logo">AZDAR <span>ADS WATCHING</span></div>
- <p>Daily Video Playlist • Watch • Complete</p>
+<h1>⚡ AZDAR ADS WATCHING</h1>
+<p>Watch Videos • Complete Daily Tasks</p>
 </header>
 
-<div class="container">
- <div class="stats">
-  <div class="stats-title">YOUR DAILY WATCHING PROGRESS</div>
-  <div class="counter"><span id="count">0</span><small>/ 10 Ads Watched</small></div>
-  <div class="progress-bg"><div class="progress" id="bar"></div></div>
-  <div class="status" id="status"></div>
-  <p id="day" style="font-size:12px;color:#aaa;margin-top:8px"></p>
- </div>
+<section class="stats">
+<div>Daily Progress</div>
+<div id="counter">0 / 10 Videos Completed</div>
+<div class="progress-bg"><div class="progress" id="progress"></div></div>
+<p id="message">Complete all 10 videos today.</p>
+</section>
 
- <h2 class="section-title">Today's Videos</h2>
- <div class="grid" id="grid"></div>
+<main class="grid" id="videoGrid"></main>
 
- <div class="notice">
-  <b>Instructions</b><br>
-  • Har video 10 seconds continuously dekhein.<br>
-  • Skip karne par count nahi hoga.<br>
-  • Har video sirf aik baar count hogi.<br>
-  • Progress 24 hours baad reset hogi.<br>
-  • Progress isi browser mein save hogi.
- </div>
-</div>
-<footer>AZDAR ADS WATCHING<br>Powered by AzDar Web Studio</footer>
+<footer>© 2026 AzDar Web Studio</footer>
 
 <script>
-const videos=[
- ["Big Buck Bunny","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"],
- ["Sintel","https://samplelib.com/mp4/sample-10s.mp4"],
- ["Flower","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
- ["Jellyfish","https://www.w3schools.com/html/mov_bbb.mp4"],
- ["Sample 15 Seconds","https://samplelib.com/mp4/sample-15s.mp4"],
- ["Sample 20 Seconds","https://samplelib.com/mp4/sample-20s.mp4"],
- ["Bear Movie","https://www.w3schools.com/html/movie.mp4"],
- ["Sintel Collection","https://durian.blender.org/wp-content/content/downloads/2010/06/sintel-1024-surround.mp4"],
- ["Tears of Steel","https://archive.org/download/TearsOfSteel720p/TearsOfSteel_720p.mp4"],
- ["Big Buck Bunny HD","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"]
+const videos = [
+ {
+  title:"Video 1 - Big Buck Bunny",
+  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+ },
+ {
+  title:"Video 2 - Elephants Dream",
+  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"
+ },
+ {
+  title:"Video 3 - For Bigger Blazes",
+  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"
+ },
+ {
+  title:"Video 4 - For Bigger Escapes",
+  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"
+ },
+ {
+  title:"Video 5 - For Bigger Fun",
+  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"
+ },
+ {
+  title:"Video 6 - For Bigger Joyrides",
+  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"
+ },
+ {
+  title:"Video 7 - For Bigger Meltdowns",
+  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"
+ },
+ {
+  title:"Video 8 - Sintel",
+  url:"https://media.w3.org/2010/05/sintel/trailer.mp4"
+ },
+ {
+  title:"Video 9 - Tears of Steel",
+  url:"https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"
+ },
+ {
+  title:"Video 10 - Flower",
+  url:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"
+ }
 ];
 
-const KEY="azdar_ads_v3";
-const LIMIT=10;
-const WATCH=10;
-const DAY=86400000;
+const today = new Date().toLocaleDateString();
+let saved = JSON.parse(localStorage.getItem("azdarProgress") || "{}");
 
-function today(){
- let d=new Date();
- return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+if(saved.date !== today){
+ saved = {date:today,done:[]};
+ localStorage.setItem("azdarProgress",JSON.stringify(saved));
 }
 
-function load(){
- try{
-  let d=JSON.parse(localStorage.getItem(KEY));
-  if(d && d.start && Date.now()-d.start<DAY &&
-     d.date===today())return d;
- }catch(e){}
- return reset();
+const grid = document.getElementById("videoGrid");
+
+function updateProgress(){
+ const total = saved.done.length;
+ document.getElementById("counter").textContent =
+ total + " / 10 Videos Completed";
+ document.getElementById("progress").style.width =
+ (total * 10) + "%";
+ document.getElementById("message").textContent =
+ total === 10 ? "Congratulations! All videos completed." :
+ "You have " + (10-total) + " videos remaining.";
 }
 
-function reset(){
- let d={start:Date.now(),date:today(),done:[]};
- localStorage.setItem(KEY,JSON.stringify(d));
- return d;
-}
+videos.forEach((item,index)=>{
+ const card = document.createElement("section");
+ card.className = "card";
 
-let data=load();
+ const heading = document.createElement("h3");
+ heading.textContent = item.title;
 
-function shuffle(arr){
- let a=[...arr];
- let seed=Number(today().replaceAll("-",""));
- function random(){
-  seed=(seed*1664525+1013904223)>>>0;
-  return seed/4294967296;
+ const video = document.createElement("video");
+ video.src = item.url;
+ video.controls = true;
+ video.preload = "metadata";
+ video.playsInline = true;
+
+ const status = document.createElement("div");
+ status.className = "status";
+
+ let watched = 0;
+ let lastTime = null;
+ let completed = saved.done.includes(index);
+
+ function showStatus(){
+  if(completed){
+   status.textContent = "✓ Completed";
+   status.className = "status done";
+   video.pause();
+  } else {
+   status.textContent = "Watch 10 seconds to complete";
+  }
  }
- for(let i=a.length-1;i>0;i--){
-  let j=Math.floor(random()*(i+1));
-  [a[i],a[j]]=[a[j],a[i]];
- }
- return a;
-}
 
-let playlist=shuffle(videos);
+ video.addEventListener("playing",()=>{
+  lastTime = video.currentTime;
+ });
 
-function save(){
- localStorage.setItem(KEY,JSON.stringify(data));
-}
+ video.addEventListener("timeupdate",()=>{
+  if(completed) return;
 
-function update(){
- document.getElementById("count").textContent=data.done.length;
- document.getElementById("bar").style.width=data.done.length*10+"%";
- document.getElementById("status").textContent=
- data.done.length===10?"Congratulations! All ads completed!":
- (10-data.done.length)+" ads remaining today.";
- document.getElementById("day").textContent="Playlist: "+today();
-}
+  const now = video.currentTime;
 
-function finish(i,v){
- if(data.done.includes(i))return;
- data.done.push(i);
- save();
- v.pause();
- document.getElementById("card"+i).classList.add("done");
- let b=document.getElementById("btn"+i);
- b.textContent="✓ Completed";
- b.disabled=true;
- update();
-}
+  if(lastTime !== null){
+   const difference = now - lastTime;
 
-playlist.forEach((item,i)=>{
- let card=document.createElement("div");
- card.className="card";
- card.id="card"+i;
- card.innerHTML=`
- <video id="v${i}" controls playsinline preload="metadata"
- controlsList="nodownload noplaybackrate">
- <source src="${item[1]}" type="video/mp4">
- </video>
- <div class="info">
- <h3>Ad ${i+1}: ${item[0]}</h3>
- <p>Watch 10 continuous seconds to complete.</p>
- <button id="btn${i}">Start Watching</button>
- </div>`;
- document.getElementById("grid").appendChild(card);
+   if(difference > 0 && difference <= 1.5){
+    watched += difference;
+   } else if(difference > 1.5){
+    watched = 0;
+   }
+  }
 
- let v=document.getElementById("v"+i);
- let b=document.getElementById("btn"+i);
- let max=0,playing=false,complete=false;
+  lastTime = now;
 
- v.addEventListener("timeupdate",()=>{
-  if(v.paused || v.seeking || complete)return;
-  if(v.currentTime<=max+0.5)max=Math.max(max,v.currentTime);
-  if(max>=WATCH && v.currentTime>=WATCH){
-   complete=true;
-   finish(i,v);
+  if(watched >= 10){
+   completed = true;
+   saved.done.push(index);
+   localStorage.setItem("azdarProgress",JSON.stringify(saved));
+   showStatus();
+   updateProgress();
+  } else {
+   status.textContent =
+    "Watched: " + Math.floor(watched) + " / 10 seconds";
   }
  });
 
- v.addEventListener("seeking",()=>{
-  if(v.currentTime>max+0.4)v.currentTime=max;
- });
-
- v.addEventListener("play",()=>{
-  if(data.done.includes(i))v.pause();
-  else b.textContent="Pause / Resume";
- });
-
- v.addEventListener("error",()=>{
-  b.textContent="Video unavailable";
- });
-
- b.addEventListener("click",()=>{
-  if(data.done.includes(i))return;
-  if(v.paused){
-   v.play().catch(()=>b.textContent="Tap video to play");
-  }else{
-   v.pause();
+ video.addEventListener("seeking",()=>{
+  lastTime = null;
+  watched = 0;
+  if(!completed){
+   status.textContent = "Watch 10 seconds continuously";
   }
  });
 
- if(data.done.includes(i)){
-  card.classList.add("done");
-  b.textContent="✓ Completed";
-  b.disabled=true;
- }
+ video.addEventListener("pause",()=>{
+  lastTime = null;
+ });
+
+ video.addEventListener("error",()=>{
+  status.textContent = "Video could not load. Check internet or try again.";
+ });
+
+ card.appendChild(heading);
+ card.appendChild(video);
+ card.appendChild(status);
+ grid.appendChild(card);
+
+ showStatus();
 });
 
-update();
-
-setTimeout(()=>{
- data=reset();
- location.reload();
-},Math.max(1000,DAY-(Date.now()-data.start)));
+updateProgress();
 </script>
 </body>
 </html>
