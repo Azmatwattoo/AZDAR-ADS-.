@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080b18">
+<title>Ads Watching Dashboard</title>
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  background:#080b18;
+  color:#f5f7ff;
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+}
+
+header{
+  padding:22px 16px;
+  text-align:center;
+  background:linear-gradient(120deg,#10152d,#17102c);
+  border-bottom:1px solid #29264c;
+}
+
+.logo{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:1px;
+  color:#00e5ff;
+}
+
+.logo span{color:#a855f7}
+
+header p{
+  margin-top:7px;
+  font-size:12px;
+  color:#aaaec5;
+}
+
+.container{
+  max-width:1050px;
+  margin:auto;
+  padding:20px 15px 50px;
+}
+
+.stats{
+  background:linear-gradient(135deg,#171e39,#211438);
+  border:1px solid #39305f;
+  padding:22px;
+  border-radius:18px;
+  margin-bottom:22px;
+  box-shadow:0 8px 30px #0005;
+}
+
+.stats-title{
+  color:#c5c8df;
+  font-size:14px;
+  margin-bottom:12px;
+}
+
+.counter{
+  font-size:38px;
+  font-weight:900;
+  color:#00e5ff;
+}
+
+.counter small{
+  font-size:17px;
+  color:#a5a7bc;
+}
+
+.progress-bg{
+  width:100%;
+  height:11px;
+  background:#080b18;
+  border-radius:20px;
+  margin:17px 0 10px;
+  overflow:hidden;
+}
+
+.progress{
+  width:0%;
+  height:100%;
+  background:linear-gradient(90deg,#00e5ff,#a855f7);
+  border-radius:20px;
+  transition:.4s;
+}
+
+.status{
+  color:#b8bad0;
+  font-size:12px;
+}
+
+.section-title{
+  font-size:21px;
+  margin:27px 0 15px;
+}
+
+.ads-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.ad-card{
+  background:#11182b;
+  border:1px solid #293450;
+  border-radius:15px;
+  overflow:hidden;
+  transition:.25s;
+}
+
+.ad-card:hover{
+  border-color:#00e5ff;
+  transform:translateY(-3px);
+}
+
+.video-wrap{
+  position:relative;
+  background:#050811;
+  aspect-ratio:16/9;
+}
+
+video{
+  display:block;
+  width:100%;
+  height:100%;
+  object-fit:contain;
+}
+
+.ad-info{padding:14px}
+
+.ad-info h3{
+  font-size:15px;
+  margin-bottom:7px;
+}
+
+.ad-info p{
+  color:#969db7;
+  font-size:12px;
+  margin-bottom:12px;
+}
+
+.ad-btn{
+  width:100%;
+  padding:11px;
+  border:0;
+  border-radius:8px;
+  background:linear-gradient(90deg,#00bcd4,#7c3aed);
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.ad-btn:disabled{
+  background:#164a3d;
+  color:#80f5c0;
+  cursor:default;
+}
+
+.completed{
+  border-color:#16a36a;
+}
+
+.completed .ad-info h3{color:#54e6a2}
+
+.notice{
+  background:#11182b;
+  border:1px solid #293450;
+  padding:17px;
+  margin-top:25px;
+  border-radius:13px;
+  color:#aeb5cf;
+  font-size:12px;
+  line-height:1.8;
+}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#747c96;
+  font-size:12px;
+}
+
+@media(max-width:600px){
+  .ads-grid{grid-template-columns:1fr}
+  .counter{font-size:33px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">ADS <span>WATCHING</span></div>
+  <p>Watch Videos • Complete Ads • Daily Progress</p>
+</header>
+
+<div class="container">
+
+  <div class="stats">
+    <div class="stats-title">YOUR DAILY WATCHING PROGRESS</div>
+
+    <div class="counter">
+      <span id="watched">0</span>
+      <small>/ 10 Ads Watched</small>
+    </div>
+
+    <div class="progress-bg">
+      <div class="progress" id="progress"></div>
+    </div>
+
+    <div class="status" id="status">
+      You have 10 ads remaining today.
+    </div>
+  </div>
+
+  <h2 class="section-title">Available Video Ads</h2>
+
+  <div class="ads-grid" id="adsGrid"></div>
+
+  <div class="notice">
+    <b>Important Instructions</b><br>
+    • Har video complete dekhna zaroori hai.<br>
+    • Video skip karne par ad count nahi hoga.<br>
+    • Har ad sirf aik baar count hoga.<br>
+    • Daily progress 24 hours baad reset hogi.<br>
+    • Progress isi browser/device mein save hoti hai.
+  </div>
+
+</div>
+
+<footer>
+  ADS WATCHING DASHBOARD<br>
+  Powered by AzDar
+</footer>
+
+<script>
+
+const videos = [
+  {
+    title:"Advertisement 01",
+    url:"https://samplelib.com/lib/preview/mp4/sample-10s.mp4"
+  },
+  {
+    title:"Advertisement 02",
+    url:"https://samplelib.com/lib/preview/mp4/sample-15s.mp4"
+  },
+  {
+    title:"Advertisement 03",
+    url:"https://samplelib.com/lib/preview/mp4/sample-20s.mp4"
+  },
+  {
+    title:"Advertisement 04",
+    url:"https://samplelib.com/lib/preview/mp4/sample-10s.mp4"
+  },
+  {
+    title:"Advertisement 05",
+    url:"https://samplelib.com/lib/preview/mp4/sample-15s.mp4"
+  },
+  {
+    title:"Advertisement 06",
+    url:"https://samplelib.com/lib/preview/mp4/sample-20s.mp4"
+  },
+  {
+    title:"Advertisement 07",
+    url:"https://samplelib.com/lib/preview/mp4/sample-10s.mp4"
+  },
+  {
+    title:"Advertisement 08",
+    url:"https://samplelib.com/lib/preview/mp4/sample-15s.mp4"
+  },
+  {
+    title:"Advertisement 09",
+    url:"https://samplelib.com/lib/preview/mp4/sample-20s.mp4"
+  },
+  {
+    title:"Advertisement 10",
+    url:"https://samplelib.com/lib/preview/mp4/sample-10s.mp4"
+  }
+];
+
+const STORAGE_KEY="azdar_ads_data_v1";
+
+function getData(){
+  let data;
+
+  try{
+    data=JSON.parse(localStorage.getItem(STORAGE_KEY));
+  }catch(e){data=null;}
+
+  const now=Date.now();
+
+  if(!data || !data.start || now-data.start>=86400000){
+    data={
+      start:now,
+      completed:[]
+    };
+    saveData(data);
+  }
+
+  return data;
+}
+
+function saveData(data){
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
+}
+
+let data=getData();
+
+function updateDashboard(){
+
+  const count=data.completed.length;
+
+  document.getElementById("watched").textContent=count;
+
+  document.getElementById("progress").style.width=
+    (count/10*100)+"%";
+
+  document.getElementById("status").textContent=
+    count===10
+    ?"Congratulations! All 10 ads completed!"
+    :"You have "+(10-count)+" ads remaining today.";
+
+  videos.forEach((video,index)=>{
+
+    const card=document.getElementById("card-"+index);
+    const btn=document.getElementById("btn-"+index);
+
+    if(data.completed.includes(index)){
+      card.classList.add("completed");
+      btn.textContent="✓ Completed";
+      btn.disabled=true;
+    }
+
+  });
+}
+
+function createAds(){
+
+  const grid=document.getElementById("adsGrid");
+
+  videos.forEach((item,index)=>{
+
+    const card=document.createElement("div");
+
+    card.className="ad-card";
+    card.id="card-"+index;
+
+    card.innerHTML=`
+      <div class="video-wrap">
+        <video
+          id="video-${index}"
+          controls
+          playsinline
+          preload="metadata"
+          controlsList="nodownload noplaybackrate"
+        >
+          <source src="${item.url}" type="video/mp4">
+        </video>
+      </div>
+
+      <div class="ad-info">
+        <h3>${item.title}</h3>
+        <p>Watch the complete video to finish this ad.</p>
+        <button class="ad-btn" id="btn-${index}">
+          Watch Video
+        </button>
+      </div>
+    `;
+
+    grid.appendChild(card);
+
+    const video=document.getElementById("video-"+index);
+    const btn=document.getElementById("btn-"+index);
+
+    let maxWatched=0;
+    let wasPlaying=false;
+
+    video.addEventListener("timeupdate",()=>{
+
+      if(!video.paused && !video.seeking){
+        maxWatched=Math.max(maxWatched,video.currentTime);
+      }
+
+    });
+
+    video.addEventListener("seeking",()=>{
+
+      if(video.currentTime>maxWatched+0.5){
+        video.currentTime=maxWatched;
+      }
+
+    });
+
+    video.addEventListener("play",()=>{
+
+      if(data.completed.includes(index)){
+        video.pause();
+      }
+
+    });
+
+    video.addEventListener("ended",()=>{
+
+      if(data.completed.includes(index))return;
+
+      if(video.duration &&
+         maxWatched>=video.duration-0.5){
+
+        data.completed.push(index);
+        saveData(data);
+        updateDashboard();
+
+      }
+
+    });
+
+    video.addEventListener("error",()=>{
+      btn.textContent="Video unavailable - Retry";
+    });
+
+    btn.addEventListener("click",()=>{
+
+      if(data.completed.includes(index))return;
+
+      if(video.readyState===0){
+        video.load();
+      }
+
+      if(video.paused){
+        video.play().then(()=>{
+          btn.textContent="Video Playing...";
+        }).catch(()=>{
+          btn.textContent="Tap to Play";
+        });
+      }else{
+        video.pause();
+        btn.textContent="Resume Video";
+      }
+
+    });
+
+  });
+
+  updateDashboard();
+
+}
+
+createAds();
+
+</script>
+</body>
+  </html>
+  
