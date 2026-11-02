@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AzDar Ads Watching</title>
 <style>
 *{box-sizing:border-box}
@@ -38,106 +38,62 @@ footer{text-align:center;color:#8393aa;padding:25px}
 <p id="message">Complete all 10 videos today.</p>
 </section>
 
-<main class="grid">
-
-<section class="card">
-<h3>Video 1 - Big Buck Bunny</h3>
-<video controls playsinline preload="none" src="https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"></video>
-<div class="status">Watch 10 seconds</div>
-</section>
-
-<section class="card">
-<h3>Video 2 - Elephants Dream</h3>
-<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4"></video>
-<div class="status">Watch 10 seconds</div>
-</section>
-
-<section class="card">
-<h3>Video 3 - For Bigger Blazes</h3>
-<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4"></video>
-<div class="status">Watch 10 seconds</div>
-</section>
-
-<section class="card">
-<h3>Video 4 - For Bigger Escapes</h3>
-<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4"></video>
-<div class="status">Watch 10 seconds</div>
-</section>
-
-<section class="card">
-<h3>Video 5 - For Bigger Fun</h3>
-<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4"></video>
-<div class="status">Watch 10 seconds</div>
-</section>
-
-<section class="card">
-<h3>Video 6 - For Bigger Joyrides</h3>
-<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4"></video>
-<div class="status">Watch 10 seconds</div>
-</section>
-
-<section class="card">
-<h3>Video 7 - For Bigger Meltdowns</h3>
-<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4"></video>
-<div class="status">Watch 10 seconds</div>
-</section>
-
-<section class="card">
-<h3>Video 8 - Sintel</h3>
-<video controls playsinline preload="none" src="https://media.w3.org/2010/05/sintel/trailer.mp4"></video>
-<div class="status">Watch 10 seconds</div>
-</section>
-
-<section class="card">
-<h3>Video 9 - Tears of Steel</h3>
-<video controls playsinline preload="none" src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4"></video>
-<div class="status">Watch 10 seconds</div>
-</section>
-
-<section class="card">
-<h3>Video 10 - Flower</h3>
-<video controls playsinline preload="none" src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"></video>
-<div class="status">Watch 10 seconds</div>
-</section>
-
-</main>
-
+<main class="grid" id="videoGrid"></main>
 <footer>© 2026 AzDar Web Studio</footer>
 
 <script>
-const today = new Date().toLocaleDateString();
+const videos=[
+["Video 1 - Big Buck Bunny","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"],
+["Video 2 - Sintel","https://media.w3.org/2010/05/sintel/trailer.mp4"],
+["Video 3 - Flower","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
+["Video 4 - Big Buck Bunny Sample","https://www.w3schools.com/html/mov_bbb.mp4"],
+["Video 5 - Sample 10 Seconds","https://samplelib.com/lib/preview/mp4/sample-10s.mp4"],
+["Video 6 - Sample 15 Seconds","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
+["Video 7 - Sample 20 Seconds","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
+["Video 8 - Sintel Trailer","https://media.w3.org/2010/05/sintel/trailer.mp4"],
+["Video 9 - Sample Video","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
+["Video 10 - Sample Movie","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"]
+];
+
+const today=new Date().toLocaleDateString();
 let saved;
-
-try{
- saved = JSON.parse(localStorage.getItem("azdarProgress") || "null");
-}catch(e){saved=null;}
-
-if(!saved || saved.date !== today){
- saved = {date:today,done:[]};
+try{saved=JSON.parse(localStorage.getItem("azdarProgress")||"null")}catch(e){saved=null}
+if(!saved||saved.date!==today){
+ saved={date:today,done:[]};
  localStorage.setItem("azdarProgress",JSON.stringify(saved));
 }
+if(!Array.isArray(saved.done))saved.done=[];
 
-const cards = document.querySelectorAll(".card");
+const grid=document.getElementById("videoGrid");
 
 function update(){
- const total = saved.done.length;
- document.getElementById("counter").textContent =
- total + " / 10 Videos Completed";
- document.getElementById("progress").style.width =
- (total*10) + "%";
- document.getElementById("message").textContent =
- total===10 ? "All 10 videos completed!" :
- (10-total)+" videos remaining.";
+ const total=saved.done.length;
+ document.getElementById("counter").textContent=total+" / 10 Videos Completed";
+ document.getElementById("progress").style.width=(total*10)+"%";
+ document.getElementById("message").textContent=
+ total===10?"All 10 videos completed!":(10-total)+" videos remaining.";
 }
 
-cards.forEach((card,index)=>{
- const video = card.querySelector("video");
- const status = card.querySelector(".status");
- let watched = 0;
- let lastTime = null;
- let completed = saved.done.includes(index);
+videos.forEach((item,index)=>{
+ const card=document.createElement("section");
+ card.className="card";
 
- function markDone(){
+ const heading=document.createElement("h3");
+ heading.textContent=item[0];
+
+ const video=document.createElement("video");
+ video.src=item[1];
+ video.controls=true;
+ video.preload="none";
+ video.playsInline=true;
+
+ const status=document.createElement("div");
+ status.className="status";
+
+ let watched=0,lastTime=null;
+ let completed=saved.done.includes(index);
+
+ function complete(){
   if(completed)return;
   completed=true;
   saved.done.push(index);
@@ -151,6 +107,8 @@ cards.forEach((card,index)=>{
  if(completed){
   status.textContent="✓ Completed";
   status.className="status done";
+ }else{
+  status.textContent="Watch 10 seconds continuously";
  }
 
  video.addEventListener("playing",()=>{
@@ -158,27 +116,18 @@ cards.forEach((card,index)=>{
  });
 
  video.addEventListener("timeupdate",()=>{
-  if(completed || video.paused)return;
-
+  if(completed||video.paused)return;
   const now=video.currentTime;
 
   if(lastTime!==null){
    const gap=now-lastTime;
-
-   if(gap>0 && gap<=1.5){
-    watched+=gap;
-   }else if(gap>1.5){
-    watched=0;
-   }
+   if(gap>0&&gap<=1.5)watched+=gap;
+   else if(gap>1.5)watched=0;
   }
-
   lastTime=now;
 
-  if(watched>=10){
-   markDone();
-  }else{
-   status.textContent="Watched "+Math.floor(watched)+" / 10 seconds";
-  }
+  if(watched>=10)complete();
+  else status.textContent="Watched "+Math.floor(watched)+" / 10 seconds";
  });
 
  video.addEventListener("seeking",()=>{
@@ -196,8 +145,13 @@ cards.forEach((card,index)=>{
  });
 
  video.addEventListener("error",()=>{
-  status.textContent="Video unavailable - try another video";
+  status.textContent="Video unavailable. Try another video.";
  });
+
+ card.appendChild(heading);
+ card.appendChild(video);
+ card.appendChild(status);
+ grid.appendChild(card);
 });
 
 update();
