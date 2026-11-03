@@ -99,20 +99,48 @@ footer{text-align:center;color:#8393aa;padding:25px}
 </section>
 
  <div style="max-width:700px;margin:-10px auto 25px;text-align:center;">
-  <button onclick="alert('Withdrawal request feature coming soon!')"
-  style="
-  width:100%;
-  padding:16px;
-  border:0;
-  border-radius:12px;
+
+  <button onclick="showWithdrawStatus()"
+  style="width:100%;padding:16px;border:0;border-radius:12px;
   background:linear-gradient(90deg,#a855f7,#00e5ff);
-  color:#07111f;
-  font-size:17px;
-  font-weight:bold;
-  cursor:pointer;">
+  color:#07111f;font-size:17px;font-weight:bold;cursor:pointer;">
   💸 WITHDRAW NOW
   </button>
- </div>
+
+  <div id="withdrawStatus" style="display:none;margin-top:12px;
+  padding:15px;border-radius:12px;background:#18352e;
+  color:#65d6a5;font-weight:bold;font-size:16px;">
+  YOUR REQUEST IS IN PROCESS
+  </div>
+
+</div>
+
+<script>
+function showWithdrawStatus() {
+  const status = document.getElementById("withdrawStatus");
+  const expiry = localStorage.getItem("withdrawStatusExpiry");
+  const now = Date.now();
+
+  if (!expiry || now >= Number(expiry)) {
+    localStorage.setItem(
+      "withdrawStatusExpiry",
+      now + (12 * 60 * 60 * 1000)
+    );
+  }
+
+  status.style.display = "block";
+}
+
+window.addEventListener("load", function() {
+  const expiry = localStorage.getItem("withdrawStatusExpiry");
+
+  if (expiry && Date.now() < Number(expiry)) {
+    document.getElementById("withdrawStatus").style.display = "block";
+  } else {
+    localStorage.removeItem("withdrawStatusExpiry");
+  }
+});
+</script>
 
 <footer>© 2026 AzDar Web Studio</footer>
 
