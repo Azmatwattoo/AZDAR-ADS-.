@@ -1,10 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>AzDar Ads Watching</title>
+
 <style>
 *{box-sizing:border-box}
 body{margin:0;padding:16px;background:#07111f;color:#f5f8ff;font-family:Arial}
@@ -16,7 +16,36 @@ header p{color:#aab8cc}
 #counter{font-size:23px;font-weight:bold;color:#00e5ff;margin-top:8px}
 .progress-bg{height:12px;background:#26364c;border-radius:20px;overflow:hidden;margin-top:12px}
 .progress{height:100%;width:0;background:linear-gradient(90deg,#a855f7,#00e5ff)}
-.grid{max-width:1100px;margin:auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+
+.earning-box{
+ max-width:1000px;
+ margin:10px auto 22px;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+ gap:15px;
+}
+.earning-card{
+ background:#101d30;
+ border:1px solid #263b57;
+ border-radius:15px;
+ padding:20px;
+ text-align:center;
+}
+.earning-card h3{color:#aab8cc;font-size:14px}
+.earning-card strong{
+ display:block;
+ color:#00e5ff;
+ font-size:28px;
+ margin-top:12px;
+}
+
+.grid{
+ max-width:1100px;
+ margin:auto;
+ display:grid;
+ grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+ gap:16px;
+}
 .card h3{font-size:16px}
 video{width:100%;height:165px;background:#000;border-radius:10px}
 .status{font-size:13px;color:#aab8cc;margin-top:10px}
@@ -28,11 +57,7 @@ video{width:100%;height:165px;background:#000;border-radius:10px}
  border:1px solid #00e5ff;
  background:linear-gradient(145deg,#101d30,#17172e);
 }
-.account h2{
- color:#00e5ff;
- text-align:center;
- margin:5px 0 20px;
-}
+.account h2{color:#00e5ff;text-align:center;margin:5px 0 20px}
 .detail{
  background:#07111f;
  padding:14px;
@@ -46,20 +71,35 @@ video{width:100%;height:165px;background:#000;border-radius:10px}
  font-size:12px;
  margin-bottom:7px;
 }
-.detail strong{
+.detail strong{font-size:17px;color:#fff;overflow-wrap:anywhere}
+.account-note{text-align:center;color:#aab8cc;font-size:12px;margin:15px 0 3px}
+
+.withdraw-area{max-width:700px;margin:-10px auto 25px;text-align:center}
+.withdraw-btn{
+ width:100%;
+ padding:16px;
+ border:0;
+ border-radius:12px;
+ background:linear-gradient(90deg,#a855f7,#00e5ff);
+ color:#07111f;
  font-size:17px;
- color:#fff;
- overflow-wrap:anywhere;
+ font-weight:bold;
+ cursor:pointer;
 }
-.account-note{
- text-align:center;
- color:#aab8cc;
- font-size:12px;
- margin:15px 0 3px;
+.withdraw-status{
+ display:none;
+ margin-top:12px;
+ padding:15px;
+ border-radius:12px;
+ background:#18352e;
+ color:#65d6a5;
+ font-weight:bold;
+ font-size:16px;
 }
 footer{text-align:center;color:#8393aa;padding:25px}
 </style>
 </head>
+
 <body>
 
 <header>
@@ -74,9 +114,32 @@ footer{text-align:center;color:#8393aa;padding:25px}
 <p id="message">Complete any 10 videos today.</p>
 </section>
 
+<!-- EARNING DASHBOARD -->
+<section class="earning-box">
+
+ <div class="earning-card">
+  <h3>TODAY'S EARNING</h3>
+  <strong id="dailyEarning">Rs. 0</strong>
+  <p>Maximum Rs. 1,500</p>
+ </div>
+
+ <div class="earning-card">
+  <h3>PER AD EARNING</h3>
+  <strong>Rs. 150</strong>
+  <p>Per completed video</p>
+ </div>
+
+ <div class="earning-card">
+  <h3>MONTHLY EARNING</h3>
+  <strong id="monthlyEarning">Rs. 0</strong>
+  <p>Current month total</p>
+ </div>
+
+</section>
+
 <main class="grid" id="videoGrid"></main>
 
-<!-- MY ACCOUNT DETAILS -->
+<!-- ACCOUNT DETAILS -->
 <section class="account">
 <h2>👤 MY ACCOUNT DETAILS</h2>
 
@@ -98,53 +161,52 @@ footer{text-align:center;color:#8393aa;padding:25px}
 <p class="account-note">Your Payment Account Details</p>
 </section>
 
- <div style="max-width:700px;margin:-10px auto 25px;text-align:center;">
+<!-- WITHDRAW BUTTON -->
+<div class="withdraw-area">
 
-  <button onclick="showWithdrawStatus()"
-  style="width:100%;padding:16px;border:0;border-radius:12px;
-  background:linear-gradient(90deg,#a855f7,#00e5ff);
-  color:#07111f;font-size:17px;font-weight:bold;cursor:pointer;">
-  💸 WITHDRAW NOW
-  </button>
+<button class="withdraw-btn" onclick="showWithdrawStatus()">
+💸 WITHDRAW NOW
+</button>
 
-  <div id="withdrawStatus" style="display:none;margin-top:12px;
-  padding:15px;border-radius:12px;background:#18352e;
-  color:#65d6a5;font-weight:bold;font-size:16px;">
-  YOUR REQUEST IS IN PROCESS
-  </div>
-
+<div id="withdrawStatus" class="withdraw-status">
+YOUR REQUEST IS IN PROCESS
 </div>
 
-<script>
-function showWithdrawStatus() {
-  const status = document.getElementById("withdrawStatus");
-  const expiry = localStorage.getItem("withdrawStatusExpiry");
-  const now = Date.now();
-
-  if (!expiry || now >= Number(expiry)) {
-    localStorage.setItem(
-      "withdrawStatusExpiry",
-      now + (12 * 60 * 60 * 1000)
-    );
-  }
-
-  status.style.display = "block";
-}
-
-window.addEventListener("load", function() {
-  const expiry = localStorage.getItem("withdrawStatusExpiry");
-
-  if (expiry && Date.now() < Number(expiry)) {
-    document.getElementById("withdrawStatus").style.display = "block";
-  } else {
-    localStorage.removeItem("withdrawStatusExpiry");
-  }
-});
-</script>
+</div>
 
 <footer>© 2026 AzDar Web Studio</footer>
 
 <script>
+
+// WITHDRAW STATUS - 12 HOURS
+
+function showWithdrawStatus(){
+ const status=document.getElementById("withdrawStatus");
+ const expiry=localStorage.getItem("withdrawStatusExpiry");
+ const now=Date.now();
+
+ if(!expiry || now>=Number(expiry)){
+  localStorage.setItem(
+   "withdrawStatusExpiry",
+   now+(12*60*60*1000)
+  );
+ }
+
+ status.style.display="block";
+}
+
+window.addEventListener("load",function(){
+ const expiry=localStorage.getItem("withdrawStatusExpiry");
+
+ if(expiry && Date.now()<Number(expiry)){
+  document.getElementById("withdrawStatus").style.display="block";
+ }else{
+  localStorage.removeItem("withdrawStatusExpiry");
+ }
+});
+
+// 30 VIDEOS
+
 const videos=[
 ["Video 1","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"],
 ["Video 2","https://media.w3.org/2010/05/sintel/trailer.mp4"],
@@ -178,29 +240,116 @@ const videos=[
 ["Video 30","https://www.samplefiles.online/files/sample.mp4"]
 ];
 
-const today=new Date().toLocaleDateString();
-let saved;
-try{saved=JSON.parse(localStorage.getItem("azdarDaily30")||"null")}catch(e){saved=null}
+ // DATE SYSTEM
 
-if(!saved||saved.date!==today){
- saved={date:today,done:[]};
- localStorage.setItem("azdarDaily30",JSON.stringify(saved));
+function getDateKey(){
+ const d=new Date();
+ return d.getFullYear()+"-"+
+ String(d.getMonth()+1).padStart(2,"0")+"-"+
+ String(d.getDate()).padStart(2,"0");
 }
-if(!Array.isArray(saved.done))saved.done=[];
+
+const today=getDateKey();
+const currentMonth=today.slice(0,7);
+
+// DAILY DATA
+
+let saved;
+
+try{
+ saved=JSON.parse(localStorage.getItem("azdarDaily30")||"null");
+}catch(e){
+ saved=null;
+}
+
+if(!saved || saved.date!==today){
+ saved={date:today,done:[]};
+}
+
+if(!Array.isArray(saved.done)){
+ saved.done=[];
+}
+
+saved.done=[...new Set(saved.done.filter(
+ n=>Number.isInteger(n)&&n>=0&&n<videos.length
+))].slice(0,10);
+
+// MONTHLY DATA
+
+let monthly;
+
+try{
+ monthly=JSON.parse(localStorage.getItem("azdarMonthlyEarnings")||"null");
+}catch(e){
+ monthly=null;
+}
+
+if(!monthly || monthly.month!==currentMonth){
+ monthly={month:currentMonth,days:{}};
+}
+
+if(!monthly.days || typeof monthly.days!=="object"){
+ monthly.days={};
+}
+
+// EARNING CALCULATION
+
+function updateEarnings(){
+
+ const dailyAds=Math.min(saved.done.length,10);
+
+ monthly.days[today]=dailyAds;
+
+ const monthlyAds=Object.values(monthly.days).reduce(
+  (total,count)=>total+Math.min(Math.max(Number(count)||0,0),10),
+  0
+ );
+
+ document.getElementById("dailyEarning").textContent=
+  "Rs. "+(dailyAds*150).toLocaleString("en-PK");
+
+ document.getElementById("monthlyEarning").textContent=
+  "Rs. "+(monthlyAds*150).toLocaleString("en-PK");
+
+ localStorage.setItem(
+  "azdarMonthlyEarnings",
+  JSON.stringify(monthly)
+ );
+
+ localStorage.setItem(
+  "azdarDaily30",
+  JSON.stringify(saved)
+ );
+
+}
+
+// VIDEO SYSTEM
 
 const grid=document.getElementById("videoGrid");
 
 function update(){
+
  const total=Math.min(saved.done.length,10);
- document.getElementById("counter").textContent=total+" / 10 Videos Completed";
- document.getElementById("progress").style.width=(total*10)+"%";
+
+ document.getElementById("counter").textContent=
+  total+" / 10 Videos Completed";
+
+ document.getElementById("progress").style.width=
+  (total*10)+"%";
+
  document.getElementById("message").textContent=
- total>=10?"Daily Target Completed! Come back tomorrow.":(10-total)+" videos remaining today.";
+  total>=10
+  ?"Daily Target Completed! Come back tomorrow."
+  :(10-total)+" videos remaining today.";
+
+ updateEarnings();
 }
 
 videos.forEach((item,index)=>{
+
  const card=document.createElement("section");
  card.className="card";
+
  const heading=document.createElement("h3");
  heading.textContent=item[0];
 
@@ -213,27 +362,44 @@ videos.forEach((item,index)=>{
  const status=document.createElement("div");
  status.className="status";
 
- let watched=0,lastTime=null;
+ let watched=0;
+ let lastTime=null;
+
  let completed=saved.done.includes(index);
 
  function complete(){
+
   if(completed)return;
+  if(saved.done.length>=10)return;
+
   completed=true;
   saved.done.push(index);
-  localStorage.setItem("azdarDaily30",JSON.stringify(saved));
+
+  localStorage.setItem(
+   "azdarDaily30",
+   JSON.stringify(saved)
+  );
+
   status.textContent="✓ Completed";
   status.className="status done";
+
   video.pause();
   update();
  }
 
  if(completed){
+
   status.textContent="✓ Completed";
   status.className="status done";
+
  }else if(saved.done.length>=10){
+
   status.textContent="Daily limit reached";
+
  }else{
+
   status.textContent="Watch 10 seconds continuously";
+
  }
 
  video.addEventListener("playing",()=>{
@@ -241,28 +407,44 @@ videos.forEach((item,index)=>{
  });
 
  video.addEventListener("timeupdate",()=>{
-  if(completed||saved.done.length>=10||video.paused)return;
+
+  if(completed || saved.done.length>=10 || video.paused)return;
+
   const now=video.currentTime;
 
   if(lastTime!==null){
+
    const gap=now-lastTime;
-   if(gap>0&&gap<=1.5)watched+=gap;
-   else if(gap>1.5)watched=0;
+
+   if(gap>0 && gap<=1.5){
+    watched+=gap;
+   }else if(gap>1.5){
+    watched=0;
+   }
   }
+
   lastTime=now;
 
-  if(watched>=10)complete();
-  else status.textContent="Watched "+Math.floor(watched)+" / 10 seconds";
+  if(watched>=10){
+   complete();
+  }else{
+   status.textContent=
+    "Watched "+Math.floor(watched)+" / 10 seconds";
+  }
  });
 
  video.addEventListener("seeking",()=>{
   watched=0;
   lastTime=null;
-  if(!completed)status.textContent="Watch 10 seconds again";
+
+  if(!completed){
+   status.textContent="Watch 10 seconds again";
+  }
  });
 
  video.addEventListener("pause",()=>{
   lastTime=null;
+
   if(!completed){
    watched=0;
    status.textContent="Paused - watch 10 seconds";
@@ -276,10 +458,13 @@ videos.forEach((item,index)=>{
  card.appendChild(heading);
  card.appendChild(video);
  card.appendChild(status);
+
  grid.appendChild(card);
 });
 
 update();
+
 </script>
+
 </body>
 </html>
