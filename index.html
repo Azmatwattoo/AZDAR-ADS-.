@@ -11,7 +11,7 @@ body{margin:0;padding:16px;background:#07111f;color:#f5f8ff;font-family:Arial}
 header{text-align:center;padding:20px 5px}
 h1{color:#00e5ff;margin:0 0 8px}
 header p{color:#aab8cc}
-.stats,.card{background:#101d30;border:1px solid #263b57;border-radius:15px;padding:15px}
+.stats,.card,.account{background:#101d30;border:1px solid #263b57;border-radius:15px;padding:15px}
 .stats{max-width:1000px;margin:10px auto 22px}
 #counter{font-size:23px;font-weight:bold;color:#00e5ff;margin-top:8px}
 .progress-bg{height:12px;background:#26364c;border-radius:20px;overflow:hidden;margin-top:12px}
@@ -21,6 +21,42 @@ header p{color:#aab8cc}
 video{width:100%;height:165px;background:#000;border-radius:10px}
 .status{font-size:13px;color:#aab8cc;margin-top:10px}
 .done{color:#00e5a0}
+
+.account{
+ max-width:700px;
+ margin:25px auto;
+ border:1px solid #00e5ff;
+ background:linear-gradient(145deg,#101d30,#17172e);
+}
+.account h2{
+ color:#00e5ff;
+ text-align:center;
+ margin:5px 0 20px;
+}
+.detail{
+ background:#07111f;
+ padding:14px;
+ border-radius:10px;
+ margin-bottom:12px;
+ border:1px solid #263b57;
+}
+.detail span{
+ display:block;
+ color:#aab8cc;
+ font-size:12px;
+ margin-bottom:7px;
+}
+.detail strong{
+ font-size:17px;
+ color:#fff;
+ overflow-wrap:anywhere;
+}
+.account-note{
+ text-align:center;
+ color:#aab8cc;
+ font-size:12px;
+ margin:15px 0 3px;
+}
 footer{text-align:center;color:#8393aa;padding:25px}
 </style>
 </head>
@@ -39,6 +75,29 @@ footer{text-align:center;color:#8393aa;padding:25px}
 </section>
 
 <main class="grid" id="videoGrid"></main>
+
+<!-- MY ACCOUNT DETAILS -->
+<section class="account">
+<h2>👤 MY ACCOUNT DETAILS</h2>
+
+<div class="detail">
+<span>ACCOUNT HOLDER NAME</span>
+<strong>Haresh Dhanak</strong>
+</div>
+
+<div class="detail">
+<span>ACCOUNT NUMBER</span>
+<strong>03473218276</strong>
+</div>
+
+<div class="detail">
+<span>ACCOUNT TYPE</span>
+<strong>EasyPaisa</strong>
+</div>
+
+<p class="account-note">Your Payment Account Details</p>
+</section>
+
 <footer>© 2026 AzDar Web Studio</footer>
 
 <script>
