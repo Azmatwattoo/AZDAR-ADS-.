@@ -8,15 +8,59 @@
 
 <style>
 *{box-sizing:border-box}
-body{margin:0;padding:16px;background:#07111f;color:#f5f8ff;font-family:Arial}
-header{text-align:center;padding:20px 5px}
-h1{color:#00e5ff;margin:0 0 8px}
+
+body{
+ margin:0;
+ padding:16px;
+ background:#07111f;
+ color:#f5f8ff;
+ font-family:Arial,sans-serif;
+}
+
+header{
+ text-align:center;
+ padding:20px 5px;
+}
+
+h1{
+ color:#00e5ff;
+ margin:0 0 8px;
+}
+
 header p{color:#aab8cc}
-.stats,.card,.account{background:#101d30;border:1px solid #263b57;border-radius:15px;padding:15px}
-.stats{max-width:1000px;margin:10px auto 22px}
-#counter{font-size:23px;font-weight:bold;color:#00e5ff;margin-top:8px}
-.progress-bg{height:12px;background:#26364c;border-radius:20px;overflow:hidden;margin-top:12px}
-.progress{height:100%;width:0;background:linear-gradient(90deg,#a855f7,#00e5ff)}
+
+.stats,.card,.account{
+ background:#101d30;
+ border:1px solid #263b57;
+ border-radius:15px;
+ padding:15px;
+}
+
+.stats{
+ max-width:1000px;
+ margin:10px auto 22px;
+}
+
+#counter{
+ font-size:23px;
+ font-weight:bold;
+ color:#00e5ff;
+ margin-top:8px;
+}
+
+.progress-bg{
+ height:12px;
+ background:#26364c;
+ border-radius:20px;
+ overflow:hidden;
+ margin-top:12px;
+}
+
+.progress{
+ height:100%;
+ width:0;
+ background:linear-gradient(90deg,#a855f7,#00e5ff);
+}
 
 .earning-box{
  max-width:1000px;
@@ -25,6 +69,7 @@ header p{color:#aab8cc}
  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
  gap:15px;
 }
+
 .earning-card{
  background:#101d30;
  border:1px solid #263b57;
@@ -32,7 +77,12 @@ header p{color:#aab8cc}
  padding:20px;
  text-align:center;
 }
-.earning-card h3{color:#aab8cc;font-size:14px}
+
+.earning-card h3{
+ color:#aab8cc;
+ font-size:14px;
+}
+
 .earning-card strong{
  display:block;
  color:#00e5ff;
@@ -47,9 +97,22 @@ header p{color:#aab8cc}
  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
  gap:16px;
 }
+
 .card h3{font-size:16px}
-video{width:100%;height:165px;background:#000;border-radius:10px}
-.status{font-size:13px;color:#aab8cc;margin-top:10px}
+
+video{
+ width:100%;
+ height:165px;
+ background:#000;
+ border-radius:10px;
+}
+
+.status{
+ font-size:13px;
+ color:#aab8cc;
+ margin-top:10px;
+}
+
 .done{color:#00e5a0}
 
 .account{
@@ -58,7 +121,13 @@ video{width:100%;height:165px;background:#000;border-radius:10px}
  border:1px solid #00e5ff;
  background:linear-gradient(145deg,#101d30,#17172e);
 }
-.account h2{color:#00e5ff;text-align:center;margin:5px 0 20px}
+
+.account h2{
+ color:#00e5ff;
+ text-align:center;
+ margin:5px 0 20px;
+}
+
 .detail{
  background:#07111f;
  padding:14px;
@@ -66,45 +135,84 @@ video{width:100%;height:165px;background:#000;border-radius:10px}
  margin-bottom:12px;
  border:1px solid #263b57;
 }
+
 .detail span{
  display:block;
  color:#aab8cc;
  font-size:12px;
  margin-bottom:7px;
 }
-.detail strong{font-size:17px;color:#fff;overflow-wrap:anywhere}
-.account-note{text-align:center;color:#aab8cc;font-size:12px;margin:15px 0 3px}
 
-.withdraw-area{max-width:700px;margin:-10px auto 25px;text-align:center}
-.withdraw-btn{
- width:100%;
- padding:16px;
- border:0;
- border-radius:12px;
- background:linear-gradient(90deg,#a855f7,#00e5ff);
- color:#07111f;
+.detail strong{
  font-size:17px;
- font-weight:bold;
- cursor:pointer;
+ color:#fff;
+ overflow-wrap:anywhere;
 }
-.withdraw-status{
- display:none;
- margin-top:12px;
- padding:18px;
- border-radius:12px;
- background:#18352e;
- border:1px solid #00e5a0;
- color:#65d6a5;
- font-size:15px;
+
+.account-note{
+ text-align:center;
+ color:#aab8cc;
+ font-size:12px;
+ margin:15px 0 3px;
+}
+
+/* WITHDRAWAL LIMITS */
+
+.withdraw-limits{
+ max-width:700px;
+ margin:25px auto;
+ padding:20px;
+ background:linear-gradient(145deg,#101d30,#17172e);
+ border:1px solid #a855f7;
+ border-radius:15px;
+}
+
+.withdraw-limits h2{
+ text-align:center;
+ color:#00e5ff;
+ margin:5px 0 20px;
+}
+
+.limit-item{
+ background:#07111f;
+ border:1px solid #263b57;
+ border-radius:10px;
+ padding:16px;
+ margin-bottom:12px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:10px;
+}
+
+.limit-item span{
+ color:#aab8cc;
+ font-size:14px;
+}
+
+.limit-item strong{
+ color:#00e5ff;
+ font-size:19px;
+}
+
+.withdraw-note{
+ color:#aab8cc;
+ font-size:12px;
  line-height:1.7;
+ text-align:center;
+ margin-top:15px;
 }
-.withdraw-status strong{
- display:block;
- color:#00e5a0;
- font-size:18px;
- margin-bottom:5px;
+
+footer{
+ text-align:center;
+ color:#8393aa;
+ padding:25px;
 }
-footer{text-align:center;color:#8393aa;padding:25px}
+
+@media(max-width:400px){
+ .limit-item strong{font-size:16px}
+ .limit-item span{font-size:12px}
+}
 </style>
 </head>
 
@@ -118,7 +226,9 @@ footer{text-align:center;color:#8393aa;padding:25px}
 <section class="stats">
 <div>DAILY PROGRESS</div>
 <div id="counter">0 / 10 Videos Completed</div>
-<div class="progress-bg"><div class="progress" id="progress"></div></div>
+<div class="progress-bg">
+<div class="progress" id="progress"></div>
+</div>
 <p id="message">Complete any 10 videos today.</p>
 </section>
 
@@ -146,7 +256,10 @@ footer{text-align:center;color:#8393aa;padding:25px}
 
 <main class="grid" id="videoGrid"></main>
 
+<!-- ACCOUNT DETAILS -->
+
 <section class="account">
+
 <h2>👤 MY ACCOUNT DETAILS</h2>
 
 <div class="detail">
@@ -164,58 +277,48 @@ footer{text-align:center;color:#8393aa;padding:25px}
 <strong>EasyPaisa</strong>
 </div>
 
-<p class="account-note">Your Payment Account Details</p>
+<p class="account-note">
+Your Payment Account Details
+</p>
+
 </section>
 
-<div class="withdraw-area">
+<!-- WITHDRAWAL LIMITS -->
 
-<button class="withdraw-btn" onclick="showWithdrawStatus()">
-💸 WITHDRAW NOW
-</button>
+<section class="withdraw-limits">
 
-<div id="withdrawStatus" class="withdraw-status">
-<strong>✓ WITHDRAWAL REQUEST CONFIRMED</strong>
-Your withdrawal of Rs. 3,000 is being processed.
+<h2>💸 WITHDRAWAL LIMITS</h2>
 
-Please wait patiently. Our company will send your payment soon.
-
-Thank you for your trust and patience!
+<div class="limit-item">
+<span>First Withdrawal</span>
+<strong>Rs. 7,500</strong>
 </div>
 
+<div class="limit-item">
+<span>Second Withdrawal</span>
+<strong>Rs. 4,500</strong>
 </div>
 
-<footer>© 2026 AzDar Web Studio</footer>
+<div class="limit-item">
+<span>Third Withdrawal Onwards</span>
+<strong>Rs. 1,500</strong>
+</div>
+
+<p class="withdraw-note">
+Withdrawal eligibility is based on verified earnings.
+All withdrawal requests are subject to account verification
+and company approval.
+</p>
+
+</section>
+
+<footer>
+© 2026 AzDar Web Studio
+</footer>
 
 <script>
 
-// WITHDRAW STATUS - 12 HOURS
-
-function showWithdrawStatus(){
- const status=document.getElementById("withdrawStatus");
- const expiry=localStorage.getItem("withdrawStatusExpiry");
- const now=Date.now();
-
- if(!expiry || now>=Number(expiry)){
-  localStorage.setItem(
-   "withdrawStatusExpiry",
-   now+(12*60*60*1000)
-  );
- }
-
- status.style.display="block";
-}
-
-window.addEventListener("load",function(){
- const expiry=localStorage.getItem("withdrawStatusExpiry");
-
- if(expiry && Date.now()<Number(expiry)){
-  document.getElementById("withdrawStatus").style.display="block";
- }else{
-  localStorage.removeItem("withdrawStatusExpiry");
- }
-});
-
-// 30 VIDEOS
+// 30 VIDEOS LIBRARY
 
 const videos=[
 ["Video 1","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"],
@@ -267,7 +370,9 @@ const currentMonth=today.slice(0,7);
 let saved;
 
 try{
- saved=JSON.parse(localStorage.getItem("azdarDaily30")||"null");
+ saved=JSON.parse(
+  localStorage.getItem("azdarDaily30")||"null"
+ );
 }catch(e){
  saved=null;
 }
@@ -280,16 +385,22 @@ if(!Array.isArray(saved.done)){
  saved.done=[];
 }
 
-saved.done=[...new Set(saved.done.filter(
- n=>Number.isInteger(n)&&n>=0&&n<videos.length
-))].slice(0,10);
+saved.done=[
+ ...new Set(
+  saved.done.filter(
+   n=>Number.isInteger(n)&&n>=0&&n<videos.length
+  )
+ )
+].slice(0,10);
 
 // MONTHLY DATA
 
 let monthly;
 
 try{
- monthly=JSON.parse(localStorage.getItem("azdarMonthlyEarnings")||"null");
+ monthly=JSON.parse(
+  localStorage.getItem("azdarMonthlyEarnings")||"null"
+ );
 }catch(e){
  monthly=null;
 }
@@ -311,7 +422,8 @@ function updateEarnings(){
  monthly.days[today]=dailyAds;
 
  const monthlyAds=Object.values(monthly.days).reduce(
-  (total,count)=>total+Math.min(Math.max(Number(count)||0,0),10),
+  (total,count)=>
+   total+Math.min(Math.max(Number(count)||0,0),10),
   0
  );
 
@@ -330,7 +442,6 @@ function updateEarnings(){
   "azdarDaily30",
   JSON.stringify(saved)
  );
-
 }
 
 // VIDEO SYSTEM
@@ -409,7 +520,6 @@ videos.forEach((item,index)=>{
  }else{
 
   status.textContent="Watch 10 seconds continuously";
-
  }
 
  video.addEventListener("playing",()=>{
