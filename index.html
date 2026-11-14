@@ -20,10 +20,14 @@
 }
 
 *{box-sizing:border-box}
+html{scroll-behavior:smooth}
 
 body{
  margin:0;
- background:var(--bg);
+ background:
+ radial-gradient(ellipse at 15% 15%,rgba(111,64,255,.12),transparent 35%),
+ radial-gradient(ellipse at 85% 70%,rgba(0,229,255,.09),transparent 35%),
+ #080d1a;
  color:var(--text);
  font-family:Inter,Arial,sans-serif;
  min-height:100vh;
@@ -33,12 +37,13 @@ body{
 body:before{
  content:"";
  position:fixed;
- width:400px;height:400px;
+ width:450px;height:450px;
  top:-180px;left:-150px;
  background:#713dff;
  filter:blur(160px);
- opacity:.22;
+ opacity:.23;
  pointer-events:none;
+ animation:floatLight 12s ease-in-out infinite alternate;
 }
 
 body:after{
@@ -48,8 +53,9 @@ body:after{
  bottom:-200px;right:-150px;
  background:#00d9ff;
  filter:blur(160px);
- opacity:.14;
+ opacity:.17;
  pointer-events:none;
+ animation:floatLight 10s ease-in-out infinite alternate-reverse;
 }
 
 .container{
@@ -69,8 +75,14 @@ body:after{
  background:rgba(17,26,45,.85);
  border:1px solid var(--border);
  border-radius:16px;
- backdrop-filter:blur(15px);
- animation:slideDown .7s ease;
+ backdrop-filter:blur(18px);
+ animation:slideDown .8s ease;
+ transition:.4s;
+}
+
+.topbar:hover{
+ border-color:rgba(0,229,255,.55);
+ box-shadow:0 0 30px rgba(0,229,255,.12);
 }
 
 .brand{
@@ -83,13 +95,15 @@ body:after{
 }
 
 .logo{
- width:40px;height:40px;
- border-radius:12px;
+ width:42px;height:42px;
+ border-radius:13px;
  display:grid;
  place-items:center;
  background:linear-gradient(135deg,var(--purple),var(--cyan));
  color:#06101c;
  font-size:23px;
+ box-shadow:0 0 20px rgba(0,229,255,.3);
+ animation:logoPulse 3s infinite,logoFloat 4s ease-in-out infinite;
 }
 
 .small-status{
@@ -98,6 +112,7 @@ body:after{
  border:1px solid var(--border);
  padding:8px 11px;
  border-radius:30px;
+ background:rgba(255,255,255,.025);
 }
 
 .small-status i{
@@ -106,11 +121,12 @@ body:after{
  border-radius:50%;
  background:#ffb84d;
  margin-right:6px;
+ animation:statusBlink 1.5s infinite;
 }
 
 .hero{
- padding:35px 5px 25px;
- animation:fadeUp .8s ease;
+ padding:38px 5px 27px;
+ animation:fadeUp .9s ease;
 }
 
 .eyebrow{
@@ -118,6 +134,7 @@ body:after{
  font-size:11px;
  font-weight:800;
  letter-spacing:3px;
+ animation:letterGlow 3s infinite;
 }
 
 .hero h1{
@@ -127,9 +144,11 @@ body:after{
 }
 
 .hero h1 span{
- background:linear-gradient(90deg,var(--cyan),#a77aff);
+ background:linear-gradient(90deg,var(--cyan),#a77aff,var(--cyan));
+ background-size:200% auto;
  -webkit-background-clip:text;
  color:transparent;
+ animation:gradientMove 4s linear infinite;
 }
 
 .hero p{
@@ -147,24 +166,44 @@ body:after{
 }
 
 .stat-card{
- padding:22px;
+ padding:23px;
  border-radius:20px;
  background:linear-gradient(145deg,#16233b,#101729);
  border:1px solid var(--border);
  position:relative;
  overflow:hidden;
- animation:fadeUp .8s ease;
+ transition:transform .4s,border-color .4s,box-shadow .4s;
+ animation:cardEnter .9s both;
+}
+
+.stat-card:nth-child(2){animation-delay:.15s}
+
+.stat-card:before{
+ content:"";
+ position:absolute;
+ width:180px;height:180px;
+ right:-85px;top:-95px;
+ border-radius:50%;
+ background:var(--cyan);
+ opacity:.09;
+ filter:blur(30px);
+ animation:floatLight 6s infinite alternate;
 }
 
 .stat-card:after{
  content:"";
  position:absolute;
- width:100px;height:100px;
- right:-45px;top:-45px;
- border-radius:50%;
- background:var(--cyan);
- opacity:.09;
- filter:blur(20px);
+ top:0;left:-100%;
+ width:60%;height:100%;
+ background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);
+ transform:skewX(-20deg);
+ animation:cardShine 6s infinite;
+}
+
+.stat-card:hover{
+ transform:translateY(-8px) scale(1.015);
+ border-color:rgba(0,229,255,.6);
+ box-shadow:0 15px 40px rgba(0,229,255,.12);
 }
 
 .stat-label{
@@ -179,10 +218,13 @@ body:after{
  font-weight:900;
  margin:13px 0 5px;
  color:var(--cyan);
+ text-shadow:0 0 20px rgba(0,229,255,.25);
+ animation:numberGlow 3s infinite;
 }
 
 .stat-card:nth-child(2) .stat-value{
  color:#b38aff;
+ text-shadow:0 0 20px rgba(179,138,255,.3);
 }
 
 .stat-sub{
@@ -195,8 +237,25 @@ body:after{
  border:1px solid var(--border);
  border-radius:20px;
  padding:22px;
- margin-top:17px;
- animation:fadeUp 1s ease;
+ margin-top:18px;
+ position:relative;
+ overflow:hidden;
+ transition:transform .4s,border-color .4s,box-shadow .4s;
+ animation:panelEnter .9s both;
+}
+
+.panel:before{
+ content:"";
+ position:absolute;
+ top:0;left:-100%;
+ width:70%;height:1px;
+ background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),transparent);
+ animation:borderSweep 7s linear infinite;
+}
+
+.panel:hover{
+ border-color:rgba(0,229,255,.3);
+ box-shadow:0 12px 35px rgba(0,0,0,.2);
 }
 
 .panel-heading{
@@ -221,6 +280,7 @@ body:after{
  font-size:10px;
  font-weight:800;
  letter-spacing:1px;
+ animation:badgeGlow 3s infinite;
 }
 
 .plan-info{
@@ -233,7 +293,15 @@ body:after{
  background:#0b1425;
  border:1px solid var(--border);
  border-radius:13px;
- padding:15px;
+ padding:16px;
+ transition:.35s;
+}
+
+.info-box:hover{
+ transform:translateY(-4px);
+ border-color:var(--purple);
+ background:#131e35;
+ box-shadow:0 8px 20px rgba(153,92,255,.1);
 }
 
 .info-box span{
@@ -244,9 +312,7 @@ body:after{
  letter-spacing:1px;
 }
 
-.info-box strong{
- font-size:15px;
-}
+.info-box strong{font-size:15px}
 
 .account-status{
  display:flex;
@@ -258,6 +324,11 @@ body:after{
  border-radius:14px;
  padding:16px;
  margin-top:15px;
+ transition:.4s;
+}
+
+.account-status:hover{
+ border-color:rgba(0,229,255,.5);
 }
 
 .status-left strong{
@@ -282,11 +353,13 @@ body:after{
 .processing{
  background:#3b2b15;
  color:#ffcb73;
+ animation:statusBlink 2s infinite;
 }
 
 .active{
  background:#103b31;
  color:#50f2b4;
+ box-shadow:0 0 15px rgba(80,242,180,.12);
 }
 
 .timer{
@@ -294,11 +367,10 @@ body:after{
  font-weight:800;
  font-size:12px;
  margin-top:13px;
+ text-shadow:0 0 12px rgba(0,229,255,.25);
 }
 
-.video-panel{
- padding:22px;
-}
+.video-panel{padding:22px}
 
 .video-intro{
  color:var(--muted);
@@ -313,6 +385,19 @@ body:after{
  border-radius:15px;
  padding:7px;
  overflow:hidden;
+ position:relative;
+ animation:videoGlow 4s infinite;
+}
+
+.video-frame:before{
+ content:"";
+ position:absolute;
+ inset:0;
+ border-radius:15px;
+ pointer-events:none;
+ background:linear-gradient(120deg,transparent,rgba(0,229,255,.07),transparent);
+ background-size:200% 200%;
+ animation:gradientMove 5s linear infinite;
 }
 
 video{
@@ -321,6 +406,7 @@ video{
  border-radius:10px;
  background:#000;
  max-height:440px;
+ position:relative;
 }
 
 .video-locked{
@@ -335,22 +421,29 @@ video{
 }
 
 .lock-icon{
- font-size:40px;
+ font-size:42px;
+ animation:lockFloat 3s ease-in-out infinite;
+ filter:drop-shadow(0 0 12px rgba(0,229,255,.3));
 }
 
 .watch-progress{
- height:8px;
+ height:9px;
  background:#25324a;
  border-radius:20px;
  overflow:hidden;
  margin-top:18px;
+ position:relative;
 }
 
 .watch-progress div{
  height:100%;
  width:0%;
  background:linear-gradient(90deg,var(--purple),var(--cyan));
+ background-size:200% 100%;
  transition:width .3s;
+ animation:progressShimmer 3s linear infinite;
+ border-radius:20px;
+ box-shadow:0 0 12px rgba(0,229,255,.4);
 }
 
 .watch-text{
@@ -364,26 +457,49 @@ video{
 
 .notice{
  margin-top:16px;
- padding:13px;
+ padding:14px;
  border-radius:12px;
  background:rgba(0,229,255,.06);
  border:1px solid rgba(0,229,255,.15);
  color:#a8c8dc;
  font-size:11px;
  line-height:1.7;
+ transition:.3s;
 }
 
-.payment{
- display:grid;
- gap:12px;
+.notice:hover{
+ border-color:rgba(0,229,255,.45);
+ background:rgba(0,229,255,.09);
 }
+
+.payment{display:grid;gap:12px}
 
 .payment-item{
- padding:16px;
+ padding:17px;
  border-radius:13px;
  background:#0b1425;
  border:1px solid var(--border);
+ transition:transform .35s,border-color .35s,background .35s;
+ position:relative;
+ overflow:hidden;
 }
+
+.payment-item:hover{
+ transform:translateX(5px);
+ border-color:var(--purple);
+ background:#151b34;
+}
+
+.payment-item:after{
+ content:"";
+ position:absolute;
+ top:0;left:-100%;
+ width:60%;height:100%;
+ background:linear-gradient(90deg,transparent,rgba(153,92,255,.08),transparent);
+ transition:.6s;
+}
+
+.payment-item:hover:after{left:120%}
 
 .payment-item span{
  color:var(--muted);
@@ -400,45 +516,125 @@ video{
 
 .footer{
  text-align:center;
- padding:30px 10px 5px;
+ padding:32px 10px 5px;
  color:#687991;
  font-size:11px;
  line-height:1.8;
+ animation:fadeUp 1.5s ease;
 }
 
-@keyframes fadeUp{
- from{opacity:0;transform:translateY(20px)}
- to{opacity:1;transform:translateY(0)}
+/* ANIMATIONS */
+
+@keyframes floatLight{
+ 0%{transform:translate(0,0) scale(1)}
+ 50%{transform:translate(60px,40px) scale(1.2)}
+ 100%{transform:translate(-30px,80px) scale(.9)}
 }
 
 @keyframes slideDown{
- from{opacity:0;transform:translateY(-15px)}
+ from{opacity:0;transform:translateY(-25px)}
  to{opacity:1;transform:translateY(0)}
 }
 
-@keyframes glow{
- 0%,100%{box-shadow:0 0 8px rgba(0,229,255,.1)}
- 50%{box-shadow:0 0 24px rgba(0,229,255,.25)}
+@keyframes fadeUp{
+ from{opacity:0;transform:translateY(25px)}
+ to{opacity:1;transform:translateY(0)}
 }
 
-.stat-card,.panel{
- animation:fadeUp .8s ease,glow 5s infinite;
+@keyframes panelEnter{
+ from{opacity:0;transform:translateY(30px) scale(.98)}
+ to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+@keyframes cardEnter{
+ from{opacity:0;transform:translateY(35px) scale(.95)}
+ to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+@keyframes logoPulse{
+ 0%,100%{box-shadow:0 0 12px rgba(0,229,255,.25)}
+ 50%{box-shadow:0 0 30px rgba(0,229,255,.65),0 0 45px rgba(153,92,255,.3)}
+}
+
+@keyframes logoFloat{
+ 0%,100%{transform:translateY(0) rotate(0)}
+ 50%{transform:translateY(-4px) rotate(5deg)}
+}
+
+@keyframes gradientMove{
+ 0%{background-position:0% 50%}
+ 100%{background-position:200% 50%}
+}
+
+@keyframes letterGlow{
+ 0%,100%{text-shadow:0 0 5px rgba(0,229,255,.1)}
+ 50%{text-shadow:0 0 15px rgba(0,229,255,.6)}
+}
+
+@keyframes numberGlow{
+ 0%,100%{filter:brightness(1)}
+ 50%{filter:brightness(1.3)}
+}
+
+@keyframes badgeGlow{
+ 0%,100%{box-shadow:0 0 5px rgba(0,229,255,.05)}
+ 50%{box-shadow:0 0 15px rgba(0,229,255,.2)}
+}
+
+@keyframes statusBlink{
+ 0%,100%{opacity:1}
+ 50%{opacity:.45}
+}
+
+@keyframes borderSweep{
+ 0%{left:-100%}
+ 100%{left:150%}
+}
+
+@keyframes cardShine{
+ 0%,65%{left:-100%}
+ 85%,100%{left:150%}
+}
+
+@keyframes videoGlow{
+ 0%,100%{box-shadow:0 0 8px rgba(0,229,255,.08)}
+ 50%{box-shadow:0 0 24px rgba(0,229,255,.19)}
+}
+
+@keyframes progressShimmer{
+ 0%{background-position:0% 50%}
+ 100%{background-position:200% 50%}
+}
+
+@keyframes lockFloat{
+ 0%,100%{transform:translateY(0) scale(1)}
+ 50%{transform:translateY(-8px) scale(1.08)}
 }
 
 @media(max-width:600px){
  .container{padding:14px 12px 35px}
- .hero{padding:28px 4px 20px}
+ .hero{padding:30px 4px 22px}
  .stats{gap:10px}
- .stat-card{padding:16px 13px}
+ .stat-card{padding:17px 13px}
  .panel{padding:16px}
  .plan-info{gap:8px}
  .account-status{padding:13px}
  .brand{font-size:15px}
+ .logo{width:38px;height:38px}
 }
 
 @media(max-width:350px){
  .stat-value{font-size:22px}
  .small-status{font-size:9px}
+}
+
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{
+  animation-duration:.01ms!important;
+  animation-iteration-count:1!important;
+  scroll-behavior:auto!important;
+  transition-duration:.01ms!important;
+ }
 }
 </style>
 </head>
@@ -463,19 +659,16 @@ video{
 </section>
 
 <section class="stats">
-
  <div class="stat-card">
   <div class="stat-label">TOTAL EARNING</div>
   <div class="stat-value" id="totalEarning">Rs. 0</div>
   <div class="stat-sub">Accumulated earnings</div>
  </div>
-
  <div class="stat-card">
   <div class="stat-label">DAILY EARNING</div>
   <div class="stat-value" id="dailyEarning">Rs. 0</div>
   <div class="stat-sub">Current 24-hour cycle</div>
  </div>
-
 </section>
 
 <section class="panel">
@@ -515,7 +708,6 @@ video{
 </section>
 
 <section class="panel video-panel">
-
  <div class="panel-heading">
   <h2>▶ Daily Video</h2>
   <div class="plan-badge">VIDEO 01</div>
@@ -531,6 +723,7 @@ video{
    <strong>Video Locked</strong>
    <span style="font-size:12px">Your video will unlock after account activation.</span>
   </div>
+
   <video id="dailyVideo" controls playsinline preload="metadata" controlsList="nodownload" style="display:none">
    <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
   </video>
@@ -548,7 +741,6 @@ video{
  <div class="notice" id="videoMessage">
   Your daily video is currently locked. It will become available when your account is active.
  </div>
-
 </section>
 
 <section class="panel">
@@ -558,22 +750,18 @@ video{
  </div>
 
  <div class="payment">
-
   <div class="payment-item">
    <span>ACCOUNT TITLE</span>
    <strong>Shahneela Kousar</strong>
   </div>
-
   <div class="payment-item">
    <span>ACCOUNT NUMBER</span>
    <strong>03436675120</strong>
   </div>
-
   <div class="payment-item">
    <span>ACCOUNT TYPE</span>
    <strong>Easypaisa</strong>
   </div>
-
  </div>
 </section>
 
@@ -584,14 +772,13 @@ video{
  <br>
  © 2026 AzDar Web Studio. All Rights Reserved.
 </footer>
-
 </div>
 
+ 
 <script>
 const REWARD = 1500;
 const REQUIRED_SECONDS = 120;
 const DAY = 24 * 60 * 60 * 1000;
-
 const STORAGE_KEY = "azdar_member_v2";
 
 function loadData(){
@@ -643,7 +830,6 @@ function updateEarnings(){
 
 function updateStatus(){
  const now = Date.now();
-
  const pill = document.getElementById("statusPill");
  const top = document.getElementById("topStatus");
  const desc = document.getElementById("statusDescription");
@@ -685,8 +871,6 @@ function lockVideo(){
  video.pause();
  video.style.display = "none";
  document.getElementById("lockedMessage").style.display = "flex";
- document.getElementById("videoMessage").textContent =
-  "Your daily video is locked until your account becomes active.";
 }
 
 function unlockVideo(){
@@ -694,8 +878,10 @@ function unlockVideo(){
   videoReady = false;
   video.style.display = "none";
   document.getElementById("lockedMessage").style.display = "flex";
+
   document.getElementById("lockedMessage").innerHTML =
    '<div class="lock-icon">✓</div><strong>Daily Target Completed</strong><span style="font-size:12px">Your next video will be available after the next 24-hour cycle.</span>';
+
   document.getElementById("videoMessage").textContent =
    "Your daily viewing session is complete.";
   return;
@@ -704,6 +890,7 @@ function unlockVideo(){
  videoReady = true;
  video.style.display = "block";
  document.getElementById("lockedMessage").style.display = "none";
+
  document.getElementById("videoMessage").textContent =
   "Watch at least 2 minutes of the video to complete your daily session.";
 }
@@ -713,12 +900,15 @@ function resetCycle(){
 
  if(now >= data.cycleStart + DAY){
   const periods = Math.floor((now - data.cycleStart) / DAY);
+
   data.cycleStart += periods * DAY;
   data.daily = 0;
   data.completed = false;
+
   watched = 0;
   completed = false;
   previousTime = null;
+
   save();
  }
 }
@@ -750,6 +940,7 @@ function creditReward(){
  save();
  updateEarnings();
  updateProgress();
+
  video.pause();
 
  document.getElementById("videoMessage").textContent =
@@ -763,6 +954,7 @@ video.addEventListener("playing",()=>{
   video.pause();
   return;
  }
+
  previousTime = video.currentTime;
  lastUpdate = Date.now();
 });
@@ -800,6 +992,7 @@ video.addEventListener("seeking",()=>{
  video.currentTime = 0;
  watched = 0;
  previousTime = null;
+
  updateProgress();
 
  document.getElementById("videoMessage").textContent =
@@ -831,7 +1024,7 @@ function refresh(){
 
 refresh();
 setInterval(refresh,1000);
-
 </script>
+
 </body>
 </html>
