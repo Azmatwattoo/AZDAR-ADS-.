@@ -3,588 +3,835 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AzDar Ads Watching</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+:root{
+ --bg:#080d1a;
+ --panel:#111a2d;
+ --cyan:#00e5ff;
+ --purple:#995cff;
+ --text:#f5f7ff;
+ --muted:#91a0b8;
+ --border:rgba(132,155,205,.17);
+}
+
 *{box-sizing:border-box}
 
 body{
  margin:0;
- padding:16px;
- background:#07111f;
- color:#f5f8ff;
- font-family:Arial,sans-serif;
+ background:var(--bg);
+ color:var(--text);
+ font-family:Inter,Arial,sans-serif;
+ min-height:100vh;
+ overflow-x:hidden;
 }
 
-header{
- text-align:center;
- padding:20px 5px;
+body:before{
+ content:"";
+ position:fixed;
+ width:400px;height:400px;
+ top:-180px;left:-150px;
+ background:#713dff;
+ filter:blur(160px);
+ opacity:.22;
+ pointer-events:none;
 }
 
-h1{
- color:#00e5ff;
- margin:0 0 8px;
+body:after{
+ content:"";
+ position:fixed;
+ width:400px;height:400px;
+ bottom:-200px;right:-150px;
+ background:#00d9ff;
+ filter:blur(160px);
+ opacity:.14;
+ pointer-events:none;
 }
 
-header p{color:#aab8cc}
+.container{
+ max-width:1050px;
+ margin:auto;
+ padding:25px 18px 50px;
+ position:relative;
+ z-index:1;
+}
 
-.stats,.card,.account{
- background:#101d30;
- border:1px solid #263b57;
- border-radius:15px;
- padding:15px;
+.topbar{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:12px;
+ padding:13px 17px;
+ background:rgba(17,26,45,.85);
+ border:1px solid var(--border);
+ border-radius:16px;
+ backdrop-filter:blur(15px);
+ animation:slideDown .7s ease;
+}
+
+.brand{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ font-size:18px;
+ font-weight:900;
+ letter-spacing:.5px;
+}
+
+.logo{
+ width:40px;height:40px;
+ border-radius:12px;
+ display:grid;
+ place-items:center;
+ background:linear-gradient(135deg,var(--purple),var(--cyan));
+ color:#06101c;
+ font-size:23px;
+}
+
+.small-status{
+ color:#b9c8db;
+ font-size:11px;
+ border:1px solid var(--border);
+ padding:8px 11px;
+ border-radius:30px;
+}
+
+.small-status i{
+ display:inline-block;
+ width:7px;height:7px;
+ border-radius:50%;
+ background:#ffb84d;
+ margin-right:6px;
+}
+
+.hero{
+ padding:35px 5px 25px;
+ animation:fadeUp .8s ease;
+}
+
+.eyebrow{
+ color:var(--cyan);
+ font-size:11px;
+ font-weight:800;
+ letter-spacing:3px;
+}
+
+.hero h1{
+ font-size:clamp(28px,5vw,43px);
+ margin:12px 0;
+ letter-spacing:-1.8px;
+}
+
+.hero h1 span{
+ background:linear-gradient(90deg,var(--cyan),#a77aff);
+ -webkit-background-clip:text;
+ color:transparent;
+}
+
+.hero p{
+ color:var(--muted);
+ font-size:14px;
+ line-height:1.7;
+ margin:0;
 }
 
 .stats{
- max-width:1000px;
- margin:10px auto 22px;
-}
-
-#counter{
- font-size:23px;
- font-weight:bold;
- color:#00e5ff;
- margin-top:8px;
-}
-
-.progress-bg{
- height:12px;
- background:#26364c;
- border-radius:20px;
- overflow:hidden;
- margin-top:12px;
-}
-
-.progress{
- height:100%;
- width:0;
- background:linear-gradient(90deg,#a855f7,#00e5ff);
-}
-
-.earning-box{
- max-width:1000px;
- margin:10px auto 22px;
  display:grid;
- grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
- gap:15px;
-}
-
-.earning-card{
- background:#101d30;
- border:1px solid #263b57;
- border-radius:15px;
- padding:20px;
- text-align:center;
-}
-
-.earning-card h3{
- color:#aab8cc;
- font-size:14px;
-}
-
-.earning-card strong{
- display:block;
- color:#00e5ff;
- font-size:28px;
- margin-top:12px;
-}
-
-.grid{
- max-width:1100px;
- margin:auto;
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+ grid-template-columns:repeat(2,1fr);
  gap:16px;
+ margin-bottom:18px;
 }
 
-.card h3{font-size:16px}
-
-video{
- width:100%;
- height:165px;
- background:#000;
- border-radius:10px;
+.stat-card{
+ padding:22px;
+ border-radius:20px;
+ background:linear-gradient(145deg,#16233b,#101729);
+ border:1px solid var(--border);
+ position:relative;
+ overflow:hidden;
+ animation:fadeUp .8s ease;
 }
 
-.status{
- font-size:13px;
- color:#aab8cc;
- margin-top:10px;
+.stat-card:after{
+ content:"";
+ position:absolute;
+ width:100px;height:100px;
+ right:-45px;top:-45px;
+ border-radius:50%;
+ background:var(--cyan);
+ opacity:.09;
+ filter:blur(20px);
 }
 
-.done{color:#00e5a0}
-
-.account{
- max-width:700px;
- margin:25px auto;
- border:1px solid #00e5ff;
- background:linear-gradient(145deg,#101d30,#17172e);
+.stat-label{
+ color:var(--muted);
+ font-size:11px;
+ font-weight:700;
+ letter-spacing:1px;
 }
 
-.account h2{
- color:#00e5ff;
- text-align:center;
- margin:5px 0 20px;
+.stat-value{
+ font-size:clamp(25px,5vw,35px);
+ font-weight:900;
+ margin:13px 0 5px;
+ color:var(--cyan);
 }
 
-.detail{
- background:#07111f;
- padding:14px;
- border-radius:10px;
- margin-bottom:12px;
- border:1px solid #263b57;
+.stat-card:nth-child(2) .stat-value{
+ color:#b38aff;
 }
 
-.detail span{
- display:block;
- color:#aab8cc;
- font-size:12px;
- margin-bottom:7px;
+.stat-sub{
+ color:#8290a8;
+ font-size:11px;
 }
 
-.detail strong{
- font-size:17px;
- color:#fff;
- overflow-wrap:anywhere;
+.panel{
+ background:linear-gradient(145deg,rgba(21,33,55,.97),rgba(13,22,39,.97));
+ border:1px solid var(--border);
+ border-radius:20px;
+ padding:22px;
+ margin-top:17px;
+ animation:fadeUp 1s ease;
 }
 
-.account-note{
- text-align:center;
- color:#aab8cc;
- font-size:12px;
- margin:15px 0 3px;
-}
-
-/* WITHDRAWAL LIMITS */
-
-.withdraw-limits{
- max-width:700px;
- margin:25px auto;
- padding:20px;
- background:linear-gradient(145deg,#101d30,#17172e);
- border:1px solid #a855f7;
- border-radius:15px;
-}
-
-.withdraw-limits h2{
- text-align:center;
- color:#00e5ff;
- margin:5px 0 20px;
-}
-
-.limit-item{
- background:#07111f;
- border:1px solid #263b57;
- border-radius:10px;
- padding:16px;
- margin-bottom:12px;
+.panel-heading{
  display:flex;
  justify-content:space-between;
  align-items:center;
  gap:10px;
+ margin-bottom:18px;
 }
 
-.limit-item span{
- color:#aab8cc;
- font-size:14px;
+.panel-heading h2{
+ font-size:16px;
+ margin:0;
 }
 
-.limit-item strong{
- color:#00e5ff;
- font-size:19px;
+.plan-badge{
+ color:var(--cyan);
+ background:rgba(0,229,255,.09);
+ border:1px solid rgba(0,229,255,.3);
+ padding:8px 13px;
+ border-radius:30px;
+ font-size:10px;
+ font-weight:800;
+ letter-spacing:1px;
 }
 
-.withdraw-note{
- color:#aab8cc;
- font-size:12px;
- line-height:1.7;
- text-align:center;
+.plan-info{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:12px;
+}
+
+.info-box{
+ background:#0b1425;
+ border:1px solid var(--border);
+ border-radius:13px;
+ padding:15px;
+}
+
+.info-box span{
+ color:var(--muted);
+ font-size:10px;
+ display:block;
+ margin-bottom:9px;
+ letter-spacing:1px;
+}
+
+.info-box strong{
+ font-size:15px;
+}
+
+.account-status{
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:12px;
+ background:#0b1425;
+ border:1px solid var(--border);
+ border-radius:14px;
+ padding:16px;
  margin-top:15px;
 }
 
-footer{
- text-align:center;
- color:#8393aa;
- padding:25px;
+.status-left strong{
+ display:block;
+ font-size:13px;
+ margin-bottom:5px;
 }
 
-@media(max-width:400px){
- .limit-item strong{font-size:16px}
- .limit-item span{font-size:12px}
+.status-left small{
+ color:var(--muted);
+ font-size:10px;
+}
+
+.status-pill{
+ border-radius:30px;
+ padding:8px 12px;
+ font-size:10px;
+ font-weight:800;
+ white-space:nowrap;
+}
+
+.processing{
+ background:#3b2b15;
+ color:#ffcb73;
+}
+
+.active{
+ background:#103b31;
+ color:#50f2b4;
+}
+
+.timer{
+ color:var(--cyan);
+ font-weight:800;
+ font-size:12px;
+ margin-top:13px;
+}
+
+.video-panel{
+ padding:22px;
+}
+
+.video-intro{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.7;
+ margin-bottom:18px;
+}
+
+.video-frame{
+ background:#030712;
+ border:1px solid rgba(0,229,255,.25);
+ border-radius:15px;
+ padding:7px;
+ overflow:hidden;
+}
+
+video{
+ width:100%;
+ display:block;
+ border-radius:10px;
+ background:#000;
+ max-height:440px;
+}
+
+.video-locked{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ flex-direction:column;
+ text-align:center;
+ min-height:200px;
+ gap:12px;
+ color:var(--muted);
+}
+
+.lock-icon{
+ font-size:40px;
+}
+
+.watch-progress{
+ height:8px;
+ background:#25324a;
+ border-radius:20px;
+ overflow:hidden;
+ margin-top:18px;
+}
+
+.watch-progress div{
+ height:100%;
+ width:0%;
+ background:linear-gradient(90deg,var(--purple),var(--cyan));
+ transition:width .3s;
+}
+
+.watch-text{
+ display:flex;
+ justify-content:space-between;
+ gap:8px;
+ font-size:11px;
+ color:var(--muted);
+ margin-top:10px;
+}
+
+.notice{
+ margin-top:16px;
+ padding:13px;
+ border-radius:12px;
+ background:rgba(0,229,255,.06);
+ border:1px solid rgba(0,229,255,.15);
+ color:#a8c8dc;
+ font-size:11px;
+ line-height:1.7;
+}
+
+.payment{
+ display:grid;
+ gap:12px;
+}
+
+.payment-item{
+ padding:16px;
+ border-radius:13px;
+ background:#0b1425;
+ border:1px solid var(--border);
+}
+
+.payment-item span{
+ color:var(--muted);
+ font-size:10px;
+ letter-spacing:1px;
+ display:block;
+ margin-bottom:8px;
+}
+
+.payment-item strong{
+ font-size:15px;
+ overflow-wrap:anywhere;
+}
+
+.footer{
+ text-align:center;
+ padding:30px 10px 5px;
+ color:#687991;
+ font-size:11px;
+ line-height:1.8;
+}
+
+@keyframes fadeUp{
+ from{opacity:0;transform:translateY(20px)}
+ to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes slideDown{
+ from{opacity:0;transform:translateY(-15px)}
+ to{opacity:1;transform:translateY(0)}
+}
+
+@keyframes glow{
+ 0%,100%{box-shadow:0 0 8px rgba(0,229,255,.1)}
+ 50%{box-shadow:0 0 24px rgba(0,229,255,.25)}
+}
+
+.stat-card,.panel{
+ animation:fadeUp .8s ease,glow 5s infinite;
+}
+
+@media(max-width:600px){
+ .container{padding:14px 12px 35px}
+ .hero{padding:28px 4px 20px}
+ .stats{gap:10px}
+ .stat-card{padding:16px 13px}
+ .panel{padding:16px}
+ .plan-info{gap:8px}
+ .account-status{padding:13px}
+ .brand{font-size:15px}
+}
+
+@media(max-width:350px){
+ .stat-value{font-size:22px}
+ .small-status{font-size:9px}
 }
 </style>
 </head>
 
 <body>
+<div class="container">
 
-<header>
-<h1>⚡ AZDAR ADS WATCHING</h1>
-<p>30 Videos Library • Daily Target 10</p>
+<header class="topbar">
+ <div class="brand">
+  <div class="logo">⚡</div>
+  <div>AZDAR <span style="color:#00e5ff">ADS</span></div>
+ </div>
+ <div class="small-status" id="topStatus">
+  <i></i> PROCESSING
+ </div>
 </header>
 
+<section class="hero">
+ <div class="eyebrow">MEMBER DASHBOARD</div>
+ <h1>Welcome, <span>Amna Farooq</span></h1>
+ <p>Your AzDar Ads Watching account. Stay consistent and complete your daily viewing session.</p>
+</section>
+
 <section class="stats">
-<div>DAILY PROGRESS</div>
-<div id="counter">0 / 10 Videos Completed</div>
-<div class="progress-bg">
-<div class="progress" id="progress"></div>
-</div>
-<p id="message">Complete any 10 videos today.</p>
-</section>
 
-<section class="earning-box">
+ <div class="stat-card">
+  <div class="stat-label">TOTAL EARNING</div>
+  <div class="stat-value" id="totalEarning">Rs. 0</div>
+  <div class="stat-sub">Accumulated earnings</div>
+ </div>
 
-<div class="earning-card">
-<h3>TODAY'S EARNING</h3>
-<strong id="dailyEarning">Rs. 0</strong>
-<p>Maximum Rs. 1,500</p>
-</div>
-
-<div class="earning-card">
-<h3>PER AD EARNING</h3>
-<strong>Rs. 150</strong>
-<p>Per completed video</p>
-</div>
-
-<div class="earning-card">
-<h3>MONTHLY EARNING</h3>
-<strong id="monthlyEarning">Rs. 0</strong>
-<p>Current month total</p>
-</div>
+ <div class="stat-card">
+  <div class="stat-label">DAILY EARNING</div>
+  <div class="stat-value" id="dailyEarning">Rs. 0</div>
+  <div class="stat-sub">Current 24-hour cycle</div>
+ </div>
 
 </section>
 
-<main class="grid" id="videoGrid"></main>
+<section class="panel">
+ <div class="panel-heading">
+  <h2>✦ Membership Details</h2>
+  <div class="plan-badge">STANDARD PLAN</div>
+ </div>
 
-<!-- ACCOUNT DETAILS -->
+ <div class="plan-info">
+  <div class="info-box">
+   <span>MEMBERSHIP</span>
+   <strong>Standard</strong>
+  </div>
+  <div class="info-box">
+   <span>DAILY REWARD</span>
+   <strong>Rs. 1,500</strong>
+  </div>
+  <div class="info-box">
+   <span>VIDEO DURATION</span>
+   <strong>2 Minutes</strong>
+  </div>
+  <div class="info-box">
+   <span>DAILY ACCESS</span>
+   <strong>24 Hours</strong>
+  </div>
+ </div>
 
-<section class="account">
+ <div class="account-status">
+  <div class="status-left">
+   <strong>Account Status</strong>
+   <small id="statusDescription">Your account is being activated.</small>
+  </div>
+  <div class="status-pill processing" id="statusPill">PROCESSING</div>
+ </div>
 
-<h2>👤 MY ACCOUNT DETAILS</h2>
+ <div class="timer" id="activationTimer">Activation countdown: 24:00:00</div>
+</section>
 
-<div class="detail">
-<span>ACCOUNT HOLDER NAME</span>
-<strong>Haresh Dhanak</strong>
-</div>
+<section class="panel video-panel">
 
-<div class="detail">
-<span>ACCOUNT NUMBER</span>
-<strong>03473218276</strong>
-</div>
+ <div class="panel-heading">
+  <h2>▶ Daily Video</h2>
+  <div class="plan-badge">VIDEO 01</div>
+ </div>
 
-<div class="detail">
-<span>ACCOUNT TYPE</span>
-<strong>EasyPaisa</strong>
-</div>
+ <p class="video-intro">
+  Watch the video for at least 2 minutes. Complete the viewing session to qualify for the daily reward.
+ </p>
 
-<p class="account-note">
-Your Payment Account Details
-</p>
+ <div class="video-frame" id="videoArea">
+  <div class="video-locked" id="lockedMessage">
+   <div class="lock-icon">🔒</div>
+   <strong>Video Locked</strong>
+   <span style="font-size:12px">Your video will unlock after account activation.</span>
+  </div>
+  <video id="dailyVideo" controls playsinline preload="metadata" controlsList="nodownload" style="display:none">
+   <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+  </video>
+ </div>
+
+ <div class="watch-progress">
+  <div id="watchBar"></div>
+ </div>
+
+ <div class="watch-text">
+  <span id="watchTime">0 / 120 seconds</span>
+  <span id="watchPercent">0%</span>
+ </div>
+
+ <div class="notice" id="videoMessage">
+  Your daily video is currently locked. It will become available when your account is active.
+ </div>
 
 </section>
 
-<!-- WITHDRAWAL LIMITS -->
+<section class="panel">
+ <div class="panel-heading">
+  <h2>👤 Payment Account Details</h2>
+  <div class="plan-badge">EASYPAISA</div>
+ </div>
 
-<section class="withdraw-limits">
+ <div class="payment">
 
-<h2>💸 WITHDRAWAL LIMITS</h2>
+  <div class="payment-item">
+   <span>ACCOUNT TITLE</span>
+   <strong>Shahneela Kousar</strong>
+  </div>
 
-<div class="limit-item">
-<span>First Withdrawal</span>
-<strong>Rs. 7,500</strong>
-</div>
+  <div class="payment-item">
+   <span>ACCOUNT NUMBER</span>
+   <strong>03436675120</strong>
+  </div>
 
-<div class="limit-item">
-<span>Second Withdrawal</span>
-<strong>Rs. 4,500</strong>
-</div>
+  <div class="payment-item">
+   <span>ACCOUNT TYPE</span>
+   <strong>Easypaisa</strong>
+  </div>
 
-<div class="limit-item">
-<span>Third Withdrawal Onwards</span>
-<strong>Rs. 1,500</strong>
-</div>
-
-<p class="withdraw-note">
-Withdrawal eligibility is based on verified earnings.
-All withdrawal requests are subject to account verification
-and company approval.
-</p>
-
+ </div>
 </section>
 
-<footer>
-© 2026 AzDar Web Studio
+<footer class="footer">
+ <strong style="color:#00e5ff">AZDAR WEB STUDIO</strong>
+ <br>
+ Your Vision, Our Code.
+ <br>
+ © 2026 AzDar Web Studio. All Rights Reserved.
 </footer>
 
+</div>
+
 <script>
+const REWARD = 1500;
+const REQUIRED_SECONDS = 120;
+const DAY = 24 * 60 * 60 * 1000;
 
-// 30 VIDEOS LIBRARY
+const STORAGE_KEY = "azdar_member_v2";
 
-const videos=[
-["Video 1","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"],
-["Video 2","https://media.w3.org/2010/05/sintel/trailer.mp4"],
-["Video 3","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
-["Video 4","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
-["Video 5","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
-["Video 6","https://samplelib.com/lib/preview/mp4/sample-30s.mp4"],
-["Video 7","https://www.w3schools.com/html/mov_bbb.mp4"],
-["Video 8","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"],
-["Video 9","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
-["Video 10","https://www.samplefiles.online/files/sample.mp4"],
-["Video 11","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"],
-["Video 12","https://media.w3.org/2010/05/sintel/trailer.mp4"],
-["Video 13","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
-["Video 14","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
-["Video 15","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
-["Video 16","https://samplelib.com/lib/preview/mp4/sample-30s.mp4"],
-["Video 17","https://www.w3schools.com/html/mov_bbb.mp4"],
-["Video 18","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"],
-["Video 19","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
-["Video 20","https://www.samplefiles.online/files/sample.mp4"],
-["Video 21","https://test-videos.co.uk/vids/bigbuckbunny/mp4/h264/720/Big_Buck_Bunny_720_10s_1MB.mp4"],
-["Video 22","https://media.w3.org/2010/05/sintel/trailer.mp4"],
-["Video 23","https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4"],
-["Video 24","https://samplelib.com/lib/preview/mp4/sample-15s.mp4"],
-["Video 25","https://samplelib.com/lib/preview/mp4/sample-20s.mp4"],
-["Video 26","https://samplelib.com/lib/preview/mp4/sample-30s.mp4"],
-["Video 27","https://www.w3schools.com/html/mov_bbb.mp4"],
-["Video 28","https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4"],
-["Video 29","https://www.sample-videos.com/video321/mp4/720/big_buck_bunny_720p_1mb.mp4"],
-["Video 30","https://www.samplefiles.online/files/sample.mp4"]
-];
-
-// DATE SYSTEM
-
-function getDateKey(){
- const d=new Date();
- return d.getFullYear()+"-"+
- String(d.getMonth()+1).padStart(2,"0")+"-"+
- String(d.getDate()).padStart(2,"0");
+function loadData(){
+ try{
+  const value = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if(value && typeof value === "object") return value;
+ }catch(e){}
+ return null;
 }
 
-const today=getDateKey();
-const currentMonth=today.slice(0,7);
+let data = loadData();
 
-// DAILY DATA
-
-let saved;
-
-try{
- saved=JSON.parse(
-  localStorage.getItem("azdarDaily30")||"null"
- );
-}catch(e){
- saved=null;
+if(!data){
+ const now = Date.now();
+ data = {
+  activatedAt: now + DAY,
+  cycleStart: now + DAY,
+  total: 0,
+  daily: 0,
+  lastReward: 0,
+  completed: false
+ };
+ save();
 }
 
-if(!saved || saved.date!==today){
- saved={date:today,done:[]};
+function save(){
+ localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
 }
 
-if(!Array.isArray(saved.done)){
- saved.done=[];
+const video = document.getElementById("dailyVideo");
+
+let watched = 0;
+let previousTime = null;
+let lastUpdate = 0;
+let completed = false;
+let videoReady = false;
+
+function formatMoney(amount){
+ return "Rs. " + Number(amount).toLocaleString("en-PK");
 }
-
-saved.done=[
- ...new Set(
-  saved.done.filter(
-   n=>Number.isInteger(n)&&n>=0&&n<videos.length
-  )
- )
-].slice(0,10);
-
-// MONTHLY DATA
-
-let monthly;
-
-try{
- monthly=JSON.parse(
-  localStorage.getItem("azdarMonthlyEarnings")||"null"
- );
-}catch(e){
- monthly=null;
-}
-
-if(!monthly || monthly.month!==currentMonth){
- monthly={month:currentMonth,days:{}};
-}
-
-if(!monthly.days || typeof monthly.days!=="object"){
- monthly.days={};
-}
-
-// EARNING CALCULATION
 
 function updateEarnings(){
+ document.getElementById("totalEarning").textContent =
+  formatMoney(data.total);
 
- const dailyAds=Math.min(saved.done.length,10);
-
- monthly.days[today]=dailyAds;
-
- const monthlyAds=Object.values(monthly.days).reduce(
-  (total,count)=>
-   total+Math.min(Math.max(Number(count)||0,0),10),
-  0
- );
-
- document.getElementById("dailyEarning").textContent=
-  "Rs. "+(dailyAds*150).toLocaleString("en-PK");
-
- document.getElementById("monthlyEarning").textContent=
-  "Rs. "+(monthlyAds*150).toLocaleString("en-PK");
-
- localStorage.setItem(
-  "azdarMonthlyEarnings",
-  JSON.stringify(monthly)
- );
-
- localStorage.setItem(
-  "azdarDaily30",
-  JSON.stringify(saved)
- );
+ document.getElementById("dailyEarning").textContent =
+  formatMoney(data.daily);
 }
 
-// VIDEO SYSTEM
+function updateStatus(){
+ const now = Date.now();
 
-const grid=document.getElementById("videoGrid");
+ const pill = document.getElementById("statusPill");
+ const top = document.getElementById("topStatus");
+ const desc = document.getElementById("statusDescription");
+ const timer = document.getElementById("activationTimer");
 
-function update(){
+ const remaining = data.activatedAt - now;
 
- const total=Math.min(saved.done.length,10);
+ if(remaining > 0){
+  pill.textContent = "PROCESSING";
+  pill.className = "status-pill processing";
+  top.innerHTML = '<i></i> PROCESSING';
+  desc.textContent = "Your account is being activated.";
 
- document.getElementById("counter").textContent=
-  total+" / 10 Videos Completed";
+  const h = Math.floor(remaining / 3600000);
+  const m = Math.floor((remaining % 3600000) / 60000);
+  const s = Math.floor((remaining % 60000) / 1000);
 
- document.getElementById("progress").style.width=
-  (total*10)+"%";
+  timer.textContent =
+   "Activation countdown: " +
+   String(h).padStart(2,"0") + ":" +
+   String(m).padStart(2,"0") + ":" +
+   String(s).padStart(2,"0");
 
- document.getElementById("message").textContent=
-  total>=10
-  ?"Daily Target Completed! Come back tomorrow."
-  :(10-total)+" videos remaining today.";
+  lockVideo();
+  return;
+ }
 
+ pill.textContent = "ACTIVE";
+ pill.className = "status-pill active";
+ top.innerHTML = '<i style="background:#50f2b4"></i> ACTIVE';
+ desc.textContent = "Your account is active.";
+ timer.textContent = "✓ Account successfully activated";
+
+ unlockVideo();
+}
+
+function lockVideo(){
+ videoReady = false;
+ video.pause();
+ video.style.display = "none";
+ document.getElementById("lockedMessage").style.display = "flex";
+ document.getElementById("videoMessage").textContent =
+  "Your daily video is locked until your account becomes active.";
+}
+
+function unlockVideo(){
+ if(data.completed){
+  videoReady = false;
+  video.style.display = "none";
+  document.getElementById("lockedMessage").style.display = "flex";
+  document.getElementById("lockedMessage").innerHTML =
+   '<div class="lock-icon">✓</div><strong>Daily Target Completed</strong><span style="font-size:12px">Your next video will be available after the next 24-hour cycle.</span>';
+  document.getElementById("videoMessage").textContent =
+   "Your daily viewing session is complete.";
+  return;
+ }
+
+ videoReady = true;
+ video.style.display = "block";
+ document.getElementById("lockedMessage").style.display = "none";
+ document.getElementById("videoMessage").textContent =
+  "Watch at least 2 minutes of the video to complete your daily session.";
+}
+
+function resetCycle(){
+ const now = Date.now();
+
+ if(now >= data.cycleStart + DAY){
+  const periods = Math.floor((now - data.cycleStart) / DAY);
+  data.cycleStart += periods * DAY;
+  data.daily = 0;
+  data.completed = false;
+  watched = 0;
+  completed = false;
+  previousTime = null;
+  save();
+ }
+}
+
+function updateProgress(){
+ const seconds = Math.min(watched,REQUIRED_SECONDS);
+ const percent = seconds / REQUIRED_SECONDS * 100;
+
+ document.getElementById("watchBar").style.width =
+  percent + "%";
+
+ document.getElementById("watchTime").textContent =
+  Math.floor(seconds) + " / 120 seconds";
+
+ document.getElementById("watchPercent").textContent =
+  Math.floor(percent) + "%";
+}
+
+function creditReward(){
+ if(completed || data.completed) return;
+ if(Date.now() < data.activatedAt) return;
+
+ completed = true;
+ data.completed = true;
+ data.total += REWARD;
+ data.daily += REWARD;
+ data.lastReward = Date.now();
+
+ save();
  updateEarnings();
+ updateProgress();
+ video.pause();
+
+ document.getElementById("videoMessage").textContent =
+  "Your 2-minute viewing session is complete. Rs. 1,500 has been added to your displayed earnings.";
+
+ unlockVideo();
 }
 
-videos.forEach((item,index)=>{
-
- const card=document.createElement("section");
- card.className="card";
-
- const heading=document.createElement("h3");
- heading.textContent=item[0];
-
- const video=document.createElement("video");
- video.src=item[1];
- video.controls=true;
- video.preload="none";
- video.playsInline=true;
-
- const status=document.createElement("div");
- status.className="status";
-
- let watched=0;
- let lastTime=null;
-
- let completed=saved.done.includes(index);
-
- function complete(){
-
-  if(completed)return;
-  if(saved.done.length>=10)return;
-
-  completed=true;
-  saved.done.push(index);
-
-  localStorage.setItem(
-   "azdarDaily30",
-   JSON.stringify(saved)
-  );
-
-  status.textContent="✓ Completed";
-  status.className="status done";
-
+video.addEventListener("playing",()=>{
+ if(!videoReady || completed){
   video.pause();
-  update();
+  return;
  }
-
- if(completed){
-
-  status.textContent="✓ Completed";
-  status.className="status done";
-
- }else if(saved.done.length>=10){
-
-  status.textContent="Daily limit reached";
-
- }else{
-
-  status.textContent="Watch 10 seconds continuously";
- }
-
- video.addEventListener("playing",()=>{
-  lastTime=video.currentTime;
- });
-
- video.addEventListener("timeupdate",()=>{
-
-  if(completed || saved.done.length>=10 || video.paused)return;
-
-  const now=video.currentTime;
-
-  if(lastTime!==null){
-
-   const gap=now-lastTime;
-
-   if(gap>0 && gap<=1.5){
-    watched+=gap;
-   }else if(gap>1.5){
-    watched=0;
-   }
-  }
-
-  lastTime=now;
-
-  if(watched>=10){
-   complete();
-  }else{
-   status.textContent=
-    "Watched "+Math.floor(watched)+" / 10 seconds";
-  }
- });
-
- video.addEventListener("seeking",()=>{
-  watched=0;
-  lastTime=null;
-
-  if(!completed){
-   status.textContent="Watch 10 seconds again";
-  }
- });
-
- video.addEventListener("pause",()=>{
-  lastTime=null;
-
-  if(!completed){
-   watched=0;
-   status.textContent="Paused - watch 10 seconds";
-  }
- });
-
- video.addEventListener("error",()=>{
-  status.textContent="Video unavailable - try another video";
- });
-
- card.appendChild(heading);
- card.appendChild(video);
- card.appendChild(status);
-
- grid.appendChild(card);
+ previousTime = video.currentTime;
+ lastUpdate = Date.now();
 });
 
-update();
+video.addEventListener("timeupdate",()=>{
+ if(!videoReady || completed || video.paused) return;
+
+ const now = Date.now();
+ const current = video.currentTime;
+
+ if(previousTime !== null){
+  const videoGap = current - previousTime;
+  const realGap = (now - lastUpdate)/1000;
+
+  if(videoGap > 0 && videoGap <= 1.5 &&
+     realGap > 0 && realGap <= 3){
+   watched += Math.min(videoGap,realGap);
+  }
+ }
+
+ previousTime = current;
+ lastUpdate = now;
+
+ updateProgress();
+
+ if(watched >= REQUIRED_SECONDS){
+  creditReward();
+ }
+});
+
+video.addEventListener("seeking",()=>{
+ if(!videoReady) return;
+
+ video.pause();
+ video.currentTime = 0;
+ watched = 0;
+ previousTime = null;
+ updateProgress();
+
+ document.getElementById("videoMessage").textContent =
+  "Seeking is not allowed. Please watch the video from the beginning.";
+});
+
+video.addEventListener("pause",()=>{
+ previousTime = null;
+});
+
+video.addEventListener("ended",()=>{
+ if(watched < REQUIRED_SECONDS){
+  document.getElementById("videoMessage").textContent =
+   "Please watch the required 2 minutes to complete your session.";
+ }
+});
+
+video.addEventListener("error",()=>{
+ document.getElementById("videoMessage").textContent =
+  "Video could not load. Please check your internet connection or replace the video link.";
+});
+
+function refresh(){
+ resetCycle();
+ updateStatus();
+ updateEarnings();
+ updateProgress();
+}
+
+refresh();
+setInterval(refresh,1000);
 
 </script>
-
 </body>
 </html>
