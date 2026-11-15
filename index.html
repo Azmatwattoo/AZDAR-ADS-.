@@ -5,1026 +5,435 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AzDar Ads Watching</title>
-
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-
 :root{
- --bg:#080d1a;
- --panel:#111a2d;
- --cyan:#00e5ff;
- --purple:#995cff;
- --text:#f5f7ff;
- --muted:#91a0b8;
- --border:rgba(132,155,205,.17);
+--bg:#080d1a;--panel:#111a2d;--cyan:#00e5ff;
+--purple:#995cff;--text:#f5f7ff;--muted:#91a0b8;
+--border:rgba(132,155,205,.17)
 }
-
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-
 body{
- margin:0;
- background:
- radial-gradient(ellipse at 15% 15%,rgba(111,64,255,.12),transparent 35%),
- radial-gradient(ellipse at 85% 70%,rgba(0,229,255,.09),transparent 35%),
- #080d1a;
- color:var(--text);
- font-family:Inter,Arial,sans-serif;
- min-height:100vh;
- overflow-x:hidden;
-}
-
-body:before{
- content:"";
- position:fixed;
- width:450px;height:450px;
- top:-180px;left:-150px;
- background:#713dff;
- filter:blur(160px);
- opacity:.23;
- pointer-events:none;
- animation:floatLight 12s ease-in-out infinite alternate;
-}
-
-body:after{
- content:"";
- position:fixed;
- width:400px;height:400px;
- bottom:-200px;right:-150px;
- background:#00d9ff;
- filter:blur(160px);
- opacity:.17;
- pointer-events:none;
- animation:floatLight 10s ease-in-out infinite alternate-reverse;
-}
-
-.container{
- max-width:1050px;
- margin:auto;
- padding:25px 18px 50px;
- position:relative;
- z-index:1;
-}
-
-.topbar{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:12px;
- padding:13px 17px;
- background:rgba(17,26,45,.85);
- border:1px solid var(--border);
- border-radius:16px;
- backdrop-filter:blur(18px);
- animation:slideDown .8s ease;
- transition:.4s;
-}
-
-.topbar:hover{
- border-color:rgba(0,229,255,.55);
- box-shadow:0 0 30px rgba(0,229,255,.12);
-}
-
-.brand{
- display:flex;
- align-items:center;
- gap:10px;
- font-size:18px;
- font-weight:900;
- letter-spacing:.5px;
-}
-
-.logo{
- width:42px;height:42px;
- border-radius:13px;
- display:grid;
- place-items:center;
- background:linear-gradient(135deg,var(--purple),var(--cyan));
- color:#06101c;
- font-size:23px;
- box-shadow:0 0 20px rgba(0,229,255,.3);
- animation:logoPulse 3s infinite,logoFloat 4s ease-in-out infinite;
-}
-
-.small-status{
- color:#b9c8db;
- font-size:11px;
- border:1px solid var(--border);
- padding:8px 11px;
- border-radius:30px;
- background:rgba(255,255,255,.025);
-}
-
-.small-status i{
- display:inline-block;
- width:7px;height:7px;
- border-radius:50%;
- background:#ffb84d;
- margin-right:6px;
- animation:statusBlink 1.5s infinite;
-}
-
-.hero{
- padding:38px 5px 27px;
- animation:fadeUp .9s ease;
-}
-
-.eyebrow{
- color:var(--cyan);
- font-size:11px;
- font-weight:800;
- letter-spacing:3px;
- animation:letterGlow 3s infinite;
-}
-
-.hero h1{
- font-size:clamp(28px,5vw,43px);
- margin:12px 0;
- letter-spacing:-1.8px;
-}
-
-.hero h1 span{
- background:linear-gradient(90deg,var(--cyan),#a77aff,var(--cyan));
- background-size:200% auto;
- -webkit-background-clip:text;
- color:transparent;
- animation:gradientMove 4s linear infinite;
-}
-
-.hero p{
- color:var(--muted);
- font-size:14px;
- line-height:1.7;
- margin:0;
-}
-
-.stats{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:16px;
- margin-bottom:18px;
-}
-
-.stat-card{
- padding:23px;
- border-radius:20px;
- background:linear-gradient(145deg,#16233b,#101729);
- border:1px solid var(--border);
- position:relative;
- overflow:hidden;
- transition:transform .4s,border-color .4s,box-shadow .4s;
- animation:cardEnter .9s both;
-}
-
-.stat-card:nth-child(2){animation-delay:.15s}
-
-.stat-card:before{
- content:"";
- position:absolute;
- width:180px;height:180px;
- right:-85px;top:-95px;
- border-radius:50%;
- background:var(--cyan);
- opacity:.09;
- filter:blur(30px);
- animation:floatLight 6s infinite alternate;
-}
-
-.stat-card:after{
- content:"";
- position:absolute;
- top:0;left:-100%;
- width:60%;height:100%;
- background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent);
- transform:skewX(-20deg);
- animation:cardShine 6s infinite;
-}
-
-.stat-card:hover{
- transform:translateY(-8px) scale(1.015);
- border-color:rgba(0,229,255,.6);
- box-shadow:0 15px 40px rgba(0,229,255,.12);
-}
-
-.stat-label{
- color:var(--muted);
- font-size:11px;
- font-weight:700;
- letter-spacing:1px;
-}
-
-.stat-value{
- font-size:clamp(25px,5vw,35px);
- font-weight:900;
- margin:13px 0 5px;
- color:var(--cyan);
- text-shadow:0 0 20px rgba(0,229,255,.25);
- animation:numberGlow 3s infinite;
-}
-
-.stat-card:nth-child(2) .stat-value{
- color:#b38aff;
- text-shadow:0 0 20px rgba(179,138,255,.3);
-}
-
-.stat-sub{
- color:#8290a8;
- font-size:11px;
-}
-
-.panel{
- background:linear-gradient(145deg,rgba(21,33,55,.97),rgba(13,22,39,.97));
- border:1px solid var(--border);
- border-radius:20px;
- padding:22px;
- margin-top:18px;
- position:relative;
- overflow:hidden;
- transition:transform .4s,border-color .4s,box-shadow .4s;
- animation:panelEnter .9s both;
-}
-
-.panel:before{
- content:"";
- position:absolute;
- top:0;left:-100%;
- width:70%;height:1px;
- background:linear-gradient(90deg,transparent,var(--cyan),var(--purple),transparent);
- animation:borderSweep 7s linear infinite;
-}
-
-.panel:hover{
- border-color:rgba(0,229,255,.3);
- box-shadow:0 12px 35px rgba(0,0,0,.2);
-}
-
-.panel-heading{
- display:flex;
- justify-content:space-between;
- align-items:center;
- gap:10px;
- margin-bottom:18px;
-}
-
-.panel-heading h2{
- font-size:16px;
- margin:0;
-}
-
-.plan-badge{
- color:var(--cyan);
- background:rgba(0,229,255,.09);
- border:1px solid rgba(0,229,255,.3);
- padding:8px 13px;
- border-radius:30px;
- font-size:10px;
- font-weight:800;
- letter-spacing:1px;
- animation:badgeGlow 3s infinite;
-}
-
-.plan-info{
- display:grid;
- grid-template-columns:1fr 1fr;
- gap:12px;
-}
-
-.info-box{
- background:#0b1425;
- border:1px solid var(--border);
- border-radius:13px;
- padding:16px;
- transition:.35s;
-}
-
-.info-box:hover{
- transform:translateY(-4px);
- border-color:var(--purple);
- background:#131e35;
- box-shadow:0 8px 20px rgba(153,92,255,.1);
-}
-
-.info-box span{
- color:var(--muted);
- font-size:10px;
- display:block;
- margin-bottom:9px;
- letter-spacing:1px;
-}
-
-.info-box strong{font-size:15px}
-
-.account-status{
- display:flex;
- align-items:center;
- justify-content:space-between;
- gap:12px;
- background:#0b1425;
- border:1px solid var(--border);
- border-radius:14px;
- padding:16px;
- margin-top:15px;
- transition:.4s;
-}
-
-.account-status:hover{
- border-color:rgba(0,229,255,.5);
-}
-
-.status-left strong{
- display:block;
- font-size:13px;
- margin-bottom:5px;
-}
-
-.status-left small{
- color:var(--muted);
- font-size:10px;
-}
-
-.status-pill{
- border-radius:30px;
- padding:8px 12px;
- font-size:10px;
- font-weight:800;
- white-space:nowrap;
-}
-
-.processing{
- background:#3b2b15;
- color:#ffcb73;
- animation:statusBlink 2s infinite;
-}
-
-.active{
- background:#103b31;
- color:#50f2b4;
- box-shadow:0 0 15px rgba(80,242,180,.12);
-}
-
-.timer{
- color:var(--cyan);
- font-weight:800;
- font-size:12px;
- margin-top:13px;
- text-shadow:0 0 12px rgba(0,229,255,.25);
-}
-
-.video-panel{padding:22px}
-
-.video-intro{
- color:var(--muted);
- font-size:12px;
- line-height:1.7;
- margin-bottom:18px;
-}
-
-.video-frame{
- background:#030712;
- border:1px solid rgba(0,229,255,.25);
- border-radius:15px;
- padding:7px;
- overflow:hidden;
- position:relative;
- animation:videoGlow 4s infinite;
-}
-
-.video-frame:before{
- content:"";
- position:absolute;
- inset:0;
- border-radius:15px;
- pointer-events:none;
- background:linear-gradient(120deg,transparent,rgba(0,229,255,.07),transparent);
- background-size:200% 200%;
- animation:gradientMove 5s linear infinite;
-}
-
-video{
- width:100%;
- display:block;
- border-radius:10px;
- background:#000;
- max-height:440px;
- position:relative;
-}
-
-.video-locked{
- display:flex;
- align-items:center;
- justify-content:center;
- flex-direction:column;
- text-align:center;
- min-height:200px;
- gap:12px;
- color:var(--muted);
-}
-
-.lock-icon{
- font-size:42px;
- animation:lockFloat 3s ease-in-out infinite;
- filter:drop-shadow(0 0 12px rgba(0,229,255,.3));
-}
-
-.watch-progress{
- height:9px;
- background:#25324a;
- border-radius:20px;
- overflow:hidden;
- margin-top:18px;
- position:relative;
-}
-
-.watch-progress div{
- height:100%;
- width:0%;
- background:linear-gradient(90deg,var(--purple),var(--cyan));
- background-size:200% 100%;
- transition:width .3s;
- animation:progressShimmer 3s linear infinite;
- border-radius:20px;
- box-shadow:0 0 12px rgba(0,229,255,.4);
-}
-
-.watch-text{
- display:flex;
- justify-content:space-between;
- gap:8px;
- font-size:11px;
- color:var(--muted);
- margin-top:10px;
-}
-
-.notice{
- margin-top:16px;
- padding:14px;
- border-radius:12px;
- background:rgba(0,229,255,.06);
- border:1px solid rgba(0,229,255,.15);
- color:#a8c8dc;
- font-size:11px;
- line-height:1.7;
- transition:.3s;
-}
-
-.notice:hover{
- border-color:rgba(0,229,255,.45);
- background:rgba(0,229,255,.09);
-}
-
-.payment{display:grid;gap:12px}
-
-.payment-item{
- padding:17px;
- border-radius:13px;
- background:#0b1425;
- border:1px solid var(--border);
- transition:transform .35s,border-color .35s,background .35s;
- position:relative;
- overflow:hidden;
-}
-
-.payment-item:hover{
- transform:translateX(5px);
- border-color:var(--purple);
- background:#151b34;
-}
-
-.payment-item:after{
- content:"";
- position:absolute;
- top:0;left:-100%;
- width:60%;height:100%;
- background:linear-gradient(90deg,transparent,rgba(153,92,255,.08),transparent);
- transition:.6s;
-}
-
-.payment-item:hover:after{left:120%}
-
-.payment-item span{
- color:var(--muted);
- font-size:10px;
- letter-spacing:1px;
- display:block;
- margin-bottom:8px;
-}
-
-.payment-item strong{
- font-size:15px;
- overflow-wrap:anywhere;
-}
-
-.footer{
- text-align:center;
- padding:32px 10px 5px;
- color:#687991;
- font-size:11px;
- line-height:1.8;
- animation:fadeUp 1.5s ease;
-}
-
-/* ANIMATIONS */
-
-@keyframes floatLight{
- 0%{transform:translate(0,0) scale(1)}
- 50%{transform:translate(60px,40px) scale(1.2)}
- 100%{transform:translate(-30px,80px) scale(.9)}
-}
-
-@keyframes slideDown{
- from{opacity:0;transform:translateY(-25px)}
- to{opacity:1;transform:translateY(0)}
-}
-
-@keyframes fadeUp{
- from{opacity:0;transform:translateY(25px)}
- to{opacity:1;transform:translateY(0)}
-}
-
-@keyframes panelEnter{
- from{opacity:0;transform:translateY(30px) scale(.98)}
- to{opacity:1;transform:translateY(0) scale(1)}
-}
-
-@keyframes cardEnter{
- from{opacity:0;transform:translateY(35px) scale(.95)}
- to{opacity:1;transform:translateY(0) scale(1)}
-}
-
-@keyframes logoPulse{
- 0%,100%{box-shadow:0 0 12px rgba(0,229,255,.25)}
- 50%{box-shadow:0 0 30px rgba(0,229,255,.65),0 0 45px rgba(153,92,255,.3)}
-}
-
-@keyframes logoFloat{
- 0%,100%{transform:translateY(0) rotate(0)}
- 50%{transform:translateY(-4px) rotate(5deg)}
-}
-
-@keyframes gradientMove{
- 0%{background-position:0% 50%}
- 100%{background-position:200% 50%}
-}
-
-@keyframes letterGlow{
- 0%,100%{text-shadow:0 0 5px rgba(0,229,255,.1)}
- 50%{text-shadow:0 0 15px rgba(0,229,255,.6)}
-}
-
-@keyframes numberGlow{
- 0%,100%{filter:brightness(1)}
- 50%{filter:brightness(1.3)}
-}
-
-@keyframes badgeGlow{
- 0%,100%{box-shadow:0 0 5px rgba(0,229,255,.05)}
- 50%{box-shadow:0 0 15px rgba(0,229,255,.2)}
-}
-
-@keyframes statusBlink{
- 0%,100%{opacity:1}
- 50%{opacity:.45}
-}
-
-@keyframes borderSweep{
- 0%{left:-100%}
- 100%{left:150%}
-}
-
-@keyframes cardShine{
- 0%,65%{left:-100%}
- 85%,100%{left:150%}
-}
-
-@keyframes videoGlow{
- 0%,100%{box-shadow:0 0 8px rgba(0,229,255,.08)}
- 50%{box-shadow:0 0 24px rgba(0,229,255,.19)}
-}
-
-@keyframes progressShimmer{
- 0%{background-position:0% 50%}
- 100%{background-position:200% 50%}
-}
-
-@keyframes lockFloat{
- 0%,100%{transform:translateY(0) scale(1)}
- 50%{transform:translateY(-8px) scale(1.08)}
-}
-
-@media(max-width:600px){
- .container{padding:14px 12px 35px}
- .hero{padding:30px 4px 22px}
- .stats{gap:10px}
- .stat-card{padding:17px 13px}
- .panel{padding:16px}
- .plan-info{gap:8px}
- .account-status{padding:13px}
- .brand{font-size:15px}
- .logo{width:38px;height:38px}
-}
-
-@media(max-width:350px){
- .stat-value{font-size:22px}
- .small-status{font-size:9px}
-}
-
-@media(prefers-reduced-motion:reduce){
- *,*::before,*::after{
-  animation-duration:.01ms!important;
-  animation-iteration-count:1!important;
-  scroll-behavior:auto!important;
-  transition-duration:.01ms!important;
- }
+margin:0;background:radial-gradient(ellipse at 15% 15%,#713dff20,transparent 35%),
+radial-gradient(ellipse at 85% 70%,#00d9ff18,transparent 35%),var(--bg);
+color:var(--text);font-family:Inter,Arial,sans-serif;min-height:100vh
+}
+.container{max-width:1050px;margin:auto;padding:22px 16px 45px}
+.topbar,.panel,.stat-card{
+background:linear-gradient(145deg,#16233b,#101729);
+border:1px solid var(--border);border-radius:18px
+}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 17px;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900}
+.logo{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;
+background:linear-gradient(135deg,var(--purple),var(--cyan));color:#06101c;font-size:23px}
+.small-status{font-size:10px;color:#b9c8db;border:1px solid var(--border);padding:8px 10px;border-radius:30px}
+.hero{padding:30px 5px 22px}
+.eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:3px}
+h1{font-size:clamp(27px,5vw,40px);margin:12px 0}
+h1 span{background:linear-gradient(90deg,var(--cyan),#a77aff);
+-webkit-background-clip:text;color:transparent}
+.hero p{color:var(--muted);font-size:13px;line-height:1.7}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+.stat-card{padding:21px}
+.stat-label{color:var(--muted);font-size:11px;font-weight:700;letter-spacing:1px}
+.stat-value{font-size:clamp(25px,5vw,35px);font-weight:900;color:var(--cyan);margin:13px 0 5px}
+.stat-card:nth-child(2) .stat-value{color:#b38aff}
+.stat-sub{font-size:11px;color:#8290a8}
+.panel{padding:21px;margin-top:17px}
+.panel-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:17px}
+.panel-heading h2{font-size:16px;margin:0}
+.plan-badge{color:var(--cyan);background:#00e5ff12;border:1px solid #00e5ff44;
+padding:8px 12px;border-radius:30px;font-size:10px;font-weight:800}
+.plan-info{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.info-box,.payment-item,.account-status{
+background:#0b1425;border:1px solid var(--border);border-radius:13px;padding:15px
+}
+.info-box span,.payment-item span{color:var(--muted);font-size:10px;display:block;margin-bottom:8px;letter-spacing:1px}
+.info-box strong,.payment-item strong{font-size:14px;overflow-wrap:anywhere}
+.account-status{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px}
+.status-left strong{display:block;font-size:13px;margin-bottom:5px}
+.status-left small{color:var(--muted);font-size:10px}
+.status-pill{border-radius:30px;padding:8px 11px;font-size:10px;font-weight:800}
+.processing{background:#3b2b15;color:#ffcb73}
+.active{background:#103b31;color:#50f2b4}
+.video-intro{color:var(--muted);font-size:12px;line-height:1.7;margin-bottom:16px}
+.video-frame{background:#030712;border:1px solid #00e5ff55;border-radius:15px;padding:7px}
+video{width:100%;display:block;border-radius:10px;background:#000;max-height:440px}
+.watch-progress{height:9px;background:#25324a;border-radius:20px;overflow:hidden;margin-top:17px}
+.watch-progress div{height:100%;width:0;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:width .3s}
+.watch-text{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted);margin-top:10px}
+.timer{color:var(--cyan);font-weight:800;font-size:13px;margin-top:13px}
+.notice{margin-top:15px;padding:13px;border-radius:12px;background:#00e5ff0c;border:1px solid #00e5ff30;color:#a8c8dc;font-size:11px;line-height:1.7}
+.payment{display:grid;gap:11px}
+.footer{text-align:center;padding:30px 10px 5px;color:#687991;font-size:11px;line-height:1.8}
+button{border:0;border-radius:10px;padding:12px 17px;background:linear-gradient(100deg,var(--purple),var(--cyan));color:#06101c;font-weight:800;cursor:pointer;margin-top:13px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.error{color:#ff8585;font-size:12px;margin-top:12px}
+@media(max-width:480px){
+.container{padding:14px 12px 35px}
+.panel{padding:16px}
+.stat-card{padding:16px}
+.brand{font-size:14px}
 }
 </style>
 </head>
-
 <body>
 <div class="container">
 
 <header class="topbar">
  <div class="brand">
-  <div class="logo">⚡</div>
-  <div>AZDAR <span style="color:#00e5ff">ADS</span></div>
+  <div class="logo">A</div>
+  <div>AzDar Ads Watching</div>
  </div>
- <div class="small-status" id="topStatus">
-  <i></i> PROCESSING
- </div>
+ <div class="small-status">● MEMBER DASHBOARD</div>
 </header>
 
 <section class="hero">
- <div class="eyebrow">MEMBER DASHBOARD</div>
- <h1>Welcome, <span>Amna Farooq</span></h1>
- <p>Your AzDar Ads Watching account. Stay consistent and complete your daily viewing session.</p>
+ <div class="eyebrow">WELCOME TO AZDAR</div>
+ <h1>Welcome, <span id="memberName">Amna Farooq</span></h1>
+ <p>Your daily watching dashboard. Complete your daily video watching to update your earnings.</p>
 </section>
 
 <section class="stats">
  <div class="stat-card">
   <div class="stat-label">TOTAL EARNING</div>
   <div class="stat-value" id="totalEarning">Rs. 0</div>
-  <div class="stat-sub">Accumulated earnings</div>
+  <div class="stat-sub">Lifetime credited earning</div>
  </div>
  <div class="stat-card">
   <div class="stat-label">DAILY EARNING</div>
   <div class="stat-value" id="dailyEarning">Rs. 0</div>
-  <div class="stat-sub">Current 24-hour cycle</div>
+  <div class="stat-sub">Today's credited earning</div>
  </div>
 </section>
 
 <section class="panel">
  <div class="panel-heading">
-  <h2>✦ Membership Details</h2>
+  <h2>My Active Plan</h2>
   <div class="plan-badge">STANDARD PLAN</div>
  </div>
-
  <div class="plan-info">
   <div class="info-box">
-   <span>MEMBERSHIP</span>
-   <strong>Standard</strong>
+   <span>DAILY REWARD</span><strong>Rs. 1,500</strong>
   </div>
   <div class="info-box">
-   <span>DAILY REWARD</span>
-   <strong>Rs. 1,500</strong>
+   <span>WATCHING TIME</span><strong>120 Seconds</strong>
   </div>
   <div class="info-box">
-   <span>VIDEO DURATION</span>
-   <strong>2 Minutes</strong>
+   <span>VIDEO DURATION</span><strong>5 Minutes</strong>
   </div>
   <div class="info-box">
-   <span>DAILY ACCESS</span>
-   <strong>24 Hours</strong>
+   <span>DAILY TASK</span><strong>1 Video</strong>
   </div>
  </div>
-
  <div class="account-status">
   <div class="status-left">
    <strong>Account Status</strong>
-   <small id="statusDescription">Your account is being activated.</small>
+   <small id="statusText">Waiting for daily task</small>
   </div>
-  <div class="status-pill processing" id="statusPill">PROCESSING</div>
+  <div class="status-pill processing" id="statusPill">PENDING</div>
  </div>
-
- <div class="timer" id="activationTimer">Activation countdown: 24:00:00</div>
+ <div class="timer" id="processingTimer"></div>
 </section>
 
-<section class="panel video-panel">
+<section class="panel">
  <div class="panel-heading">
-  <h2>▶ Daily Video</h2>
-  <div class="plan-badge">VIDEO 01</div>
+  <h2>Daily Video Watching</h2>
+  <div class="plan-badge" id="taskBadge">0 / 120 SEC</div>
+ </div>
+ <div class="video-intro">
+  Watch the video for 120 seconds. Your reward will automatically be credited after successful completion.
  </div>
 
- <p class="video-intro">
-  Watch the video for at least 2 minutes. Complete the viewing session to qualify for the daily reward.
- </p>
-
- <div class="video-frame" id="videoArea">
-  <div class="video-locked" id="lockedMessage">
-   <div class="lock-icon">🔒</div>
-   <strong>Video Locked</strong>
-   <span style="font-size:12px">Your video will unlock after account activation.</span>
-  </div>
-
-  <video id="dailyVideo" controls playsinline preload="metadata" controlsList="nodownload" style="display:none">
+ <div class="video-frame">
+  <video id="adVideo"
+   controls
+   playsinline
+   preload="metadata">
    <source src="https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4">
+   Your browser does not support HTML5 video.
   </video>
  </div>
 
  <div class="watch-progress">
-  <div id="watchBar"></div>
+  <div id="progressBar"></div>
  </div>
-
  <div class="watch-text">
-  <span id="watchTime">0 / 120 seconds</span>
-  <span id="watchPercent">0%</span>
+  <span id="watchTime">Watched: 0 / 120 seconds</span>
+  <span id="percent">0%</span>
  </div>
 
- <div class="notice" id="videoMessage">
-  Your daily video is currently locked. It will become available when your account is active.
+ <div class="timer" id="watchMessage">Press play to start watching.</div>
+ <div class="error" id="videoError"></div>
+ <button id="retryButton" style="display:none" onclick="retryVideo()">Retry Video</button>
+
+ <div class="notice">
+  Important: Keep the video playing. Pausing the video will pause your watching progress. Daily reward is credited only once after 120 seconds of actual playback.
  </div>
 </section>
 
 <section class="panel">
- <div class="panel-heading">
-  <h2>👤 Payment Account Details</h2>
-  <div class="plan-badge">EASYPAISA</div>
- </div>
-
+ <div class="panel-heading"><h2>Payment Details</h2></div>
  <div class="payment">
   <div class="payment-item">
-   <span>ACCOUNT TITLE</span>
-   <strong>Shahneela Kousar</strong>
+   <span>ACCOUNT NAME</span>
+   <strong id="accountName">Not Provided</strong>
   </div>
   <div class="payment-item">
-   <span>ACCOUNT NUMBER</span>
-   <strong>03436675120</strong>
+   <span>PAYMENT ACCOUNT</span>
+   <strong id="accountNumber">Not Provided</strong>
   </div>
   <div class="payment-item">
-   <span>ACCOUNT TYPE</span>
-   <strong>Easypaisa</strong>
+   <span>PAYMENT METHOD</span>
+   <strong id="paymentMethod">Not Provided</strong>
   </div>
  </div>
 </section>
 
-<footer class="footer">
- <strong style="color:#00e5ff">AZDAR WEB STUDIO</strong>
- <br>
- Your Vision, Our Code.
- <br>
- © 2026 AzDar Web Studio. All Rights Reserved.
-</footer>
+<div class="footer">
+ <strong>AzDar Ads Watching</strong><br>
+ Your Work, Your Progress, Your Future.<br>
+ © 2026 AzDar Digital Network
 </div>
 
- 
+</div>
+
 <script>
+/* EDIT MEMBER DETAILS HERE */
+const MEMBER_NAME = "Amna Farooq";
+const ACCOUNT_NAME = "Not Provided";
+const ACCOUNT_NUMBER = "Not Provided";
+const PAYMENT_METHOD = "Not Provided";
+
 const REWARD = 1500;
 const REQUIRED_SECONDS = 120;
-const DAY = 24 * 60 * 60 * 1000;
+const MAX_VIDEO_SECONDS = 300;
 const STORAGE_KEY = "azdar_member_v2";
+
+const video = document.getElementById("adVideo");
+const errorBox = document.getElementById("videoError");
+const retryButton = document.getElementById("retryButton");
+
+document.getElementById("memberName").textContent = MEMBER_NAME;
+document.getElementById("accountName").textContent = ACCOUNT_NAME;
+document.getElementById("accountNumber").textContent = ACCOUNT_NUMBER;
+document.getElementById("paymentMethod").textContent = PAYMENT_METHOD;
+
+function today(){
+ return new Date().toLocaleDateString("en-CA");
+}
 
 function loadData(){
  try{
-  const value = JSON.parse(localStorage.getItem(STORAGE_KEY));
-  if(value && typeof value === "object") return value;
- }catch(e){}
- return null;
+  return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+ }catch(e){
+  return {};
+ }
 }
 
 let data = loadData();
 
-if(!data){
- const now = Date.now();
- data = {
-  activatedAt: now + DAY,
-  cycleStart: now + DAY,
-  total: 0,
-  daily: 0,
-  lastReward: 0,
-  completed: false
- };
- save();
+if(data.date !== today()){
+ data.date = today();
+ data.dailyEarning = 0;
+ data.watchedSeconds = 0;
+ data.completed = false;
 }
 
-function save(){
+data.totalEarning = Number(data.totalEarning || 0);
+data.dailyEarning = Number(data.dailyEarning || 0);
+data.watchedSeconds = Number(data.watchedSeconds || 0);
+data.completed = Boolean(data.completed);
+
+function saveData(){
  localStorage.setItem(STORAGE_KEY,JSON.stringify(data));
 }
 
-const video = document.getElementById("dailyVideo");
+let lastVideoTime = null;
 
-let watched = 0;
-let previousTime = null;
-let lastUpdate = 0;
-let completed = false;
-let videoReady = false;
-
-function formatMoney(amount){
- return "Rs. " + Number(amount).toLocaleString("en-PK");
-}
-
-function updateEarnings(){
+function updateDashboard(){
  document.getElementById("totalEarning").textContent =
-  formatMoney(data.total);
+ "Rs. " + data.totalEarning.toLocaleString("en-PK");
 
  document.getElementById("dailyEarning").textContent =
-  formatMoney(data.daily);
-}
+ "Rs. " + data.dailyEarning.toLocaleString("en-PK");
 
-function updateStatus(){
- const now = Date.now();
- const pill = document.getElementById("statusPill");
- const top = document.getElementById("topStatus");
- const desc = document.getElementById("statusDescription");
- const timer = document.getElementById("activationTimer");
-
- const remaining = data.activatedAt - now;
-
- if(remaining > 0){
-  pill.textContent = "PROCESSING";
-  pill.className = "status-pill processing";
-  top.innerHTML = '<i></i> PROCESSING';
-  desc.textContent = "Your account is being activated.";
-
-  const h = Math.floor(remaining / 3600000);
-  const m = Math.floor((remaining % 3600000) / 60000);
-  const s = Math.floor((remaining % 60000) / 1000);
-
-  timer.textContent =
-   "Activation countdown: " +
-   String(h).padStart(2,"0") + ":" +
-   String(m).padStart(2,"0") + ":" +
-   String(s).padStart(2,"0");
-
-  lockVideo();
-  return;
- }
-
- pill.textContent = "ACTIVE";
- pill.className = "status-pill active";
- top.innerHTML = '<i style="background:#50f2b4"></i> ACTIVE';
- desc.textContent = "Your account is active.";
- timer.textContent = "✓ Account successfully activated";
-
- unlockVideo();
-}
-
-function lockVideo(){
- videoReady = false;
- video.pause();
- video.style.display = "none";
- document.getElementById("lockedMessage").style.display = "flex";
-}
-
-function unlockVideo(){
- if(data.completed){
-  videoReady = false;
-  video.style.display = "none";
-  document.getElementById("lockedMessage").style.display = "flex";
-
-  document.getElementById("lockedMessage").innerHTML =
-   '<div class="lock-icon">✓</div><strong>Daily Target Completed</strong><span style="font-size:12px">Your next video will be available after the next 24-hour cycle.</span>';
-
-  document.getElementById("videoMessage").textContent =
-   "Your daily viewing session is complete.";
-  return;
- }
-
- videoReady = true;
- video.style.display = "block";
- document.getElementById("lockedMessage").style.display = "none";
-
- document.getElementById("videoMessage").textContent =
-  "Watch at least 2 minutes of the video to complete your daily session.";
-}
-
-function resetCycle(){
- const now = Date.now();
-
- if(now >= data.cycleStart + DAY){
-  const periods = Math.floor((now - data.cycleStart) / DAY);
-
-  data.cycleStart += periods * DAY;
-  data.daily = 0;
-  data.completed = false;
-
-  watched = 0;
-  completed = false;
-  previousTime = null;
-
-  save();
- }
-}
-
-function updateProgress(){
- const seconds = Math.min(watched,REQUIRED_SECONDS);
- const percent = seconds / REQUIRED_SECONDS * 100;
-
- document.getElementById("watchBar").style.width =
-  percent + "%";
+ const seconds = Math.min(data.watchedSeconds,REQUIRED_SECONDS);
+ const percent = Math.floor(seconds/REQUIRED_SECONDS*100);
 
  document.getElementById("watchTime").textContent =
-  Math.floor(seconds) + " / 120 seconds";
+ "Watched: " + seconds + " / " + REQUIRED_SECONDS + " seconds";
 
- document.getElementById("watchPercent").textContent =
-  Math.floor(percent) + "%";
+ document.getElementById("percent").textContent = percent + "%";
+ document.getElementById("progressBar").style.width = percent + "%";
+ document.getElementById("taskBadge").textContent =
+ seconds + " / " + REQUIRED_SECONDS + " SEC";
+
+ if(data.completed){
+  document.getElementById("watchMessage").textContent =
+   "Congratulations! Today's task is completed. Rs. 1,500 credited.";
+  video.pause();
+  video.controls = false;
+  document.getElementById("statusPill").textContent = "PROCESSING";
+  document.getElementById("statusPill").className = "status-pill processing";
+  document.getElementById("statusText").textContent = "Today's reward credited";
+  retryButton.style.display = "none";
+ }else{
+  document.getElementById("statusPill").textContent = "PENDING";
+  document.getElementById("statusPill").className = "status-pill processing";
+  document.getElementById("statusText").textContent = "Complete today's video task";
+ }
 }
 
-function creditReward(){
- if(completed || data.completed) return;
- if(Date.now() < data.activatedAt) return;
+function completeTask(){
+ if(data.completed) return;
 
- completed = true;
+ data.watchedSeconds = REQUIRED_SECONDS;
  data.completed = true;
- data.total += REWARD;
- data.daily += REWARD;
- data.lastReward = Date.now();
+ data.totalEarning += REWARD;
+ data.dailyEarning += REWARD;
+ data.rewardTime = Date.now();
 
- save();
- updateEarnings();
- updateProgress();
+ saveData();
+ updateDashboard();
 
- video.pause();
-
- document.getElementById("videoMessage").textContent =
-  "Your 2-minute viewing session is complete. Rs. 1,500 has been added to your displayed earnings.";
-
- unlockVideo();
+ document.getElementById("watchMessage").textContent =
+  "Task completed! Rs. 1,500 has been credited to your dashboard.";
 }
 
-video.addEventListener("playing",()=>{
- if(!videoReady || completed){
+video.addEventListener("loadedmetadata",()=>{
+ if(!Number.isFinite(video.duration) || video.duration < REQUIRED_SECONDS){
+  showVideoError("Video duration is not sufficient. Please try again.");
+  return;
+ }
+
+ if(data.completed){
   video.pause();
   return;
  }
 
- previousTime = video.currentTime;
- lastUpdate = Date.now();
+ // Resume from previously saved watching progress.
+ video.currentTime = Math.min(data.watchedSeconds,MAX_VIDEO_SECONDS);
 });
 
-video.addEventListener("timeupdate",()=>{
- if(!videoReady || completed || video.paused) return;
-
- const now = Date.now();
- const current = video.currentTime;
-
- if(previousTime !== null){
-  const videoGap = current - previousTime;
-  const realGap = (now - lastUpdate)/1000;
-
-  if(videoGap > 0 && videoGap <= 1.5 &&
-     realGap > 0 && realGap <= 3){
-   watched += Math.min(videoGap,realGap);
-  }
+video.addEventListener("play",()=>{
+ if(data.completed){
+  video.pause();
+  return;
  }
-
- previousTime = current;
- lastUpdate = now;
-
- updateProgress();
-
- if(watched >= REQUIRED_SECONDS){
-  creditReward();
- }
-});
-
-video.addEventListener("seeking",()=>{
- if(!videoReady) return;
-
- video.pause();
- video.currentTime = 0;
- watched = 0;
- previousTime = null;
-
- updateProgress();
-
- document.getElementById("videoMessage").textContent =
-  "Seeking is not allowed. Please watch the video from the beginning.";
+ lastVideoTime = video.currentTime;
+ document.getElementById("watchMessage").textContent = "Video is playing...";
 });
 
 video.addEventListener("pause",()=>{
- previousTime = null;
+ lastVideoTime = null;
+ if(!data.completed){
+  document.getElementById("watchMessage").textContent = "Video paused. Press play to continue.";
+ }
 });
 
-video.addEventListener("ended",()=>{
- if(watched < REQUIRED_SECONDS){
-  document.getElementById("videoMessage").textContent =
-   "Please watch the required 2 minutes to complete your session.";
+video.addEventListener("timeupdate",()=>{
+ if(data.completed) return;
+
+ const current = video.currentTime;
+
+ if(current >= MAX_VIDEO_SECONDS){
+  video.pause();
+  video.currentTime = MAX_VIDEO_SECONDS;
+  return;
+ }
+
+ if(!video.paused && lastVideoTime !== null){
+  const delta = current - lastVideoTime;
+
+  // Only count normal forward playback.
+  if(delta > 0 && delta <= 1.5){
+   data.watchedSeconds += delta;
+   data.watchedSeconds = Math.min(data.watchedSeconds,REQUIRED_SECONDS);
+   saveData();
+   updateDashboard();
+
+   if(data.watchedSeconds >= REQUIRED_SECONDS){
+    completeTask();
+    return;
+   }
+  }
+ }
+
+ lastVideoTime = current;
+});
+
+video.addEventListener("seeking",()=>{
+ if(data.completed) return;
+
+ // Prevent skipping ahead through the video.
+ if(video.currentTime > data.watchedSeconds + 2){
+  video.currentTime = data.watchedSeconds;
+ }
+});
+
+video.addEventListener("ratechange",()=>{
+ if(video.playbackRate !== 1){
+  video.playbackRate = 1;
  }
 });
 
 video.addEventListener("error",()=>{
- document.getElementById("videoMessage").textContent =
-  "Video could not load. Please check your internet connection or replace the video link.";
+ showVideoError("Video could not load. Check your internet connection and retry.");
 });
 
-function refresh(){
- resetCycle();
- updateStatus();
- updateEarnings();
- updateProgress();
+video.addEventListener("stalled",()=>{
+ if(!data.completed){
+  document.getElementById("watchMessage").textContent =
+   "Video buffering... Please wait.";
+ }
+});
+
+function showVideoError(message){
+ errorBox.textContent = message;
+ retryButton.style.display = "inline-block";
+ document.getElementById("watchMessage").textContent = "Video unavailable.";
 }
 
-refresh();
-setInterval(refresh,1000);
-</script>
+function retryVideo(){
+ errorBox.textContent = "";
+ retryButton.style.display = "none";
+ video.load();
+ video.play().catch(()=>{
+  document.getElementById("watchMessage").textContent =
+   "Press the play button to start the video.";
+ });
+}
 
+function updateProcessingStatus(){
+ if(!data.rewardTime){
+  document.getElementById("processingTimer").textContent = "";
+  return;
+ }
+
+ const remaining = 86400000 - (Date.now() - data.rewardTime);
+
+ if(remaining <= 0){
+  document.getElementById("statusPill").textContent = "ACTIVE";
+  document.getElementById("statusPill").className = "status-pill active";
+  document.getElementById("statusText").textContent = "24-hour processing completed";
+  document.getElementById("processingTimer").textContent = "Account is now active.";
+  return;
+ }
+
+ const hours = Math.floor(remaining/3600000);
+ const minutes = Math.floor((remaining%3600000)/60000);
+ const seconds = Math.floor((remaining%60000)/1000);
+
+ document.getElementById("processingTimer").textContent =
+  "Processing time remaining: " + hours + "h " + minutes + "m " + seconds + "s";
+}
+
+saveData();
+updateDashboard();
+updateProcessingStatus();
+setInterval(updateProcessingStatus,1000);
+</script>
 </body>
 </html>
