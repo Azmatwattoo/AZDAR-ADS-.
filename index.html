@@ -762,6 +762,60 @@ video{
    <strong>Easypaisa</strong>
   </div>
  </div>
+
+ 
+<!-- AZDAR ADS WITHDRAWAL SECTION -->
+<div id="withdrawal-section" style="
+  margin: 25px 12px;
+  padding: 22px;
+  background: linear-gradient(135deg, #171044, #43218a);
+  border: 2px solid gold;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  font-family: Arial, sans-serif;
+">
+  <h2 style="color: gold;">💰 WITHDRAWAL</h2>
+
+  <button id="withdrawBtn" onclick="startWithdrawal()" style="
+    background: linear-gradient(45deg, #ffd700, #ff9900);
+    color: #160d35;
+    border: none;
+    padding: 13px 35px;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+  ">
+    WITHDRAW NOW
+  </button>
+
+  <div id="withdrawMessage" style="
+    margin-top: 18px;
+    font-size: 16px;
+    font-weight: bold;
+    display: none;
+  "></div>
+</div>
+
+<script>
+function startWithdrawal() {
+  const message = document.getElementById("withdrawMessage");
+
+  // Show request notification
+  message.style.display = "block";
+  message.style.color = "#ffffff";
+  message.innerHTML =
+    "⏳ Your request is sent to admin. Please wait.";
+
+  // After 2 hours show success
+  setTimeout(function() {
+    message.style.color = "#00ff88";
+    message.innerHTML = "✅ SUCCESS!";
+  }, 2 * 60 * 60 * 1000);
+}
+</script>
+ 
 </section>
 
 <footer class="footer">
